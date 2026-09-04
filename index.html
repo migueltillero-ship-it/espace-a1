@@ -185,6 +185,34 @@
             .progression-carte { padding: 1.2rem 1.4rem; }
             .section-cours, .bloc-jeu { padding: 2rem 1.5rem; }
         }
+            /* ============ UX/UI INTERACTIF ============ */
+        .tooltip { position: relative; border-bottom: 1px dashed var(--bleu-institutionnel); cursor: help; color: var(--bleu-institutionnel); font-weight: 700; }
+        .tooltip::after { content: attr(data-tip); position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); background: var(--graphite); color: white; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: 400; opacity: 0; pointer-events: none; transition: 0.2s; white-space: nowrap; margin-bottom: 5px; }
+        .tooltip:hover::after { opacity: 1; transform: translateX(-50%) translateY(-5px); }
+
+        .blank-input { border: none; border-bottom: 2px dotted var(--bleu-institutionnel); background: transparent; font-family: var(--font-texte); font-size: 1rem; color: var(--graphite); width: 140px; text-align: center; transition: 0.3s; outline: none; margin: 0 0.5rem; font-weight: 700; }
+        .blank-input:focus { border-bottom-color: var(--sauge); background: rgba(85,122,100,0.05); }
+        .blank-input.success { border-bottom-color: var(--sauge); color: var(--sauge); }
+        .blank-input.error { border-bottom-color: #B5484D; color: #B5484D; }
+        .feedback-msg { font-size: 0.85rem; font-weight: 700; margin-top: 0.5rem; opacity: 0; transition: opacity 0.3s; height: 0; }
+        .feedback-msg.success { color: var(--sauge); opacity: 1; height: auto; }
+        .feedback-msg.error { color: #B5484D; opacity: 1; height: auto; }
+
+        .form-identite { background: #FDFCF8; padding: 2rem; border-radius: 8px; border-left: 5px solid var(--bleu-institutionnel); margin-top: 1.5rem; }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-label { display: block; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: var(--graphite); margin-bottom: 0.3rem; letter-spacing: 1px; }
+        .form-input { width: 100%; border: none; border-bottom: 1px dotted var(--sauge); padding: 0.5rem 0; font-family: var(--font-texte); font-size: 1rem; background: transparent; outline: none; transition: 0.3s; }
+        .form-input:focus { border-bottom-style: solid; border-bottom-color: var(--bleu-institutionnel); }
+
+        .dnd-container { display: flex; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap; }
+        .drag-items { display: flex; gap: 1rem; flex-wrap: wrap; flex: 1; min-width: 250px; align-content: flex-start; }
+        .drag-item { background: var(--bleu-institutionnel); color: white; padding: 8px 16px; border-radius: 4px; cursor: grab; font-weight: 700; font-size: 0.9rem; user-select: none; transition: transform 0.2s; }
+        .drag-item:active { cursor: grabbing; transform: scale(0.95); }
+        .drag-item.dragging { opacity: 0.5; }
+        .drop-zones { display: flex; gap: 1rem; flex-wrap: wrap; flex: 2; min-width: 300px; }
+        .drop-zone { flex: 1; border: 2px dashed var(--sauge); padding: 16px; min-height: 100px; min-width: 140px; border-radius: 8px; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; background: #FDFCF8; transition: 0.3s; }
+        .drop-zone.dragover { background: rgba(85,122,100,0.1); border-style: solid; }
+        .drop-zone-title { font-weight: 700; color: var(--graphite); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 0.5rem; pointer-events: none; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -483,6 +511,24 @@
                     <p>En français, on ne dit jamais «&#8239;Bonjour Monsieur Tillero&#8239;» à quelqu'un qu'on connaît bien&#8239;: le prénom suffit souvent entre collègues, mais on garde le vouvoiement avec un professeur ou une personne âgée, même en l'appelant par son prénom.</p>
                 </div>
 
+                                <div class="encadre-grammaire" style="background: #fff; border-color: var(--sauge);">
+                    <h4 style="color: var(--sauge);">Pratique Active — Complétez les phrases</h4>
+                    <p>Complétez avec le verbe <b>s'appeler</b> ou <b>être</b> au présent.</p>
+                    <div style="margin-top: 1.5rem;">
+                        <div style="margin-bottom: 1.2rem;">
+                            1. Bonjour, je <input type="text" class="blank-input" data-rep="suis" placeholder="votre réponse" onblur="validerTrou(this)"> étudiant en architecture.
+                            <div class="feedback-msg"></div>
+                        </div>
+                        <div style="margin-bottom: 1.2rem;">
+                            2. Et vous, comment vous <input type="text" class="blank-input" data-rep="vous appelez" placeholder="votre réponse" onblur="validerTrou(this)"> &#8239;?
+                            <div class="feedback-msg"></div>
+                        </div>
+                        <div style="margin-bottom: 1.2rem;">
+                            3. Nous <input type="text" class="blank-input" data-rep="sommes" placeholder="votre réponse" onblur="validerTrou(this)"> français, de Lyon.
+                            <div class="feedback-msg"></div>
+                        </div>
+                    </div>
+                </div>
                 <div id="quiz-mod1"></div>
             </div>
         </div>
@@ -710,6 +756,26 @@
                     <p>En France, on dit souvent <b>« beau-père »</b> et <b>« belle-mère »</b> aussi bien pour le parent du conjoint que pour le nouveau conjoint d'un parent&#8239;: le contexte précise le sens&#8239;!</p>
                 </div>
 
+                                <div class="encadre-grammaire" style="background: #fff; border-color: var(--sauge);">
+                    <h4 style="color: var(--sauge);">Pratique Active — Remplir un formulaire</h4>
+                    <p>Complétez cette <span class="tooltip" data-tip="Document officiel d'identité">fiche d'état civil</span> avec vos données personnelles. Validez ensuite pour vérifier le format.</p>
+                    <div class="form-identite">
+                        <div class="form-group">
+                            <label class="form-label">Nom de famille</label>
+                            <input type="text" class="form-input" id="form-nom" placeholder="Ex: Dupont">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Prénom</label>
+                            <input type="text" class="form-input" id="form-prenom" placeholder="Ex: Marie">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date de naissance (JJ/MM/AAAA)</label>
+                            <input type="text" class="form-input" id="form-date" placeholder="Ex: 15/08/1995">
+                        </div>
+                        <button class="btn-prim" style="background: var(--sauge); width: auto;" onclick="validerFormulaire()">Valider la fiche</button>
+                        <div id="form-feedback" class="feedback-msg" style="margin-top: 1rem;"></div>
+                    </div>
+                </div>
                 <div id="quiz-mod3"></div>
             </div>
         </div>
@@ -822,6 +888,25 @@
                     <p>Dans les petits appartements français (studios), il n'est pas rare que la « chambre » et le « salon » soient <b>la même pièce</b> — on parle alors d'un <b>studio</b> ou d'un <b>T1</b> (T pour « type »).</p>
                 </div>
 
+                                <div class="encadre-grammaire" style="background: #fff; border-color: var(--sauge);">
+                    <h4 style="color: var(--sauge);">Pratique Active — Aménager l'espace</h4>
+                    <p>Déplacez les <span class="tooltip" data-tip="Objets de la maison (lit, table...)">meubles</span> dans la pièce correspondante (Drag & Drop).</p>
+                    <div class="dnd-container">
+                        <div class="drag-items" id="drag-source">
+                            <div class="drag-item" draggable="true" id="meuble-lit" data-target="zone-chambre">Le lit</div>
+                            <div class="drag-item" draggable="true" id="meuble-canape" data-target="zone-salon">Le canapé</div>
+                            <div class="drag-item" draggable="true" id="meuble-four" data-target="zone-cuisine">Le four</div>
+                            <div class="drag-item" draggable="true" id="meuble-armoire" data-target="zone-chambre">L'armoire</div>
+                            <div class="drag-item" draggable="true" id="meuble-douche" data-target="zone-bain">La douche</div>
+                        </div>
+                        <div class="drop-zones">
+                            <div class="drop-zone" id="zone-chambre"><div class="drop-zone-title">La Chambre</div></div>
+                            <div class="drop-zone" id="zone-salon"><div class="drop-zone-title">Le Salon</div></div>
+                            <div class="drop-zone" id="zone-cuisine"><div class="drop-zone-title">La Cuisine</div></div>
+                            <div class="drop-zone" id="zone-bain"><div class="drop-zone-title">La Salle de bains</div></div>
+                        </div>
+                    </div>
+                </div>
                 <div id="quiz-mod4"></div>
             </div>
         </div>
@@ -1228,6 +1313,101 @@
         majAffichageProgression();
         ['mod1', 'mod2', 'mod3', 'mod4'].forEach(construireQuiz);
     });
+        /* ============================================================
+       MÉCANIQUES DE JEU ET VALIDATION (Fase 1)
+       ============================================================ */
+    // 1. Fill-in-the-blanks
+    window.validerTrou = function(input) {
+        const reponseAttendue = input.getAttribute('data-rep').toLowerCase().trim();
+        const saisie = input.value.toLowerCase().trim();
+        const feedback = input.nextElementSibling;
+        
+        if(saisie === '') {
+            input.classList.remove('success', 'error');
+            feedback.className = 'feedback-msg';
+            return;
+        }
+        
+        if(saisie === reponseAttendue) {
+            input.classList.remove('error');
+            input.classList.add('success');
+            feedback.textContent = "Bravo\u202f! Bonne r\u00E9ponse.";
+            feedback.className = 'feedback-msg success';
+        } else {
+            input.classList.remove('success');
+            input.classList.add('error');
+            feedback.textContent = "Attention\u202f: V\u00E9rifiez la conjugaison.";
+            feedback.className = 'feedback-msg error';
+        }
+    };
+
+    // 2. Formulaire interactif
+    window.validerFormulaire = function() {
+        const nom = document.getElementById('form-nom').value.trim();
+        const prenom = document.getElementById('form-prenom').value.trim();
+        const date = document.getElementById('form-date').value.trim();
+        const feedback = document.getElementById('form-feedback');
+        
+        const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[012])\/\d{4}$/;
+        
+        if(nom === '' || prenom === '') {
+            feedback.textContent = "Attention\u202f: Le nom et le pr\u00E9nom sont obligatoires.";
+            feedback.className = 'feedback-msg error';
+            return;
+        }
+        
+        if(!dateRegex.test(date)) {
+            feedback.textContent = "Attention\u202f: Le format de la date doit \u00EAtre JJ/MM/AAAA.";
+            feedback.className = 'feedback-msg error';
+            return;
+        }
+        
+        feedback.textContent = "F\u00E9licitations\u202f! Votre fiche d'identit\u00E9 est correctement remplie.";
+        feedback.className = 'feedback-msg success';
+    };
+
+    // 3. Drag and Drop Logic
+    document.addEventListener('DOMContentLoaded', () => {
+        const draggables = document.querySelectorAll('.drag-item');
+        const dropZones = document.querySelectorAll('.drop-zone');
+
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', () => {
+                draggable.classList.add('dragging');
+            });
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+            });
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                zone.classList.add('dragover');
+            });
+            zone.addEventListener('dragleave', () => {
+                zone.classList.remove('dragover');
+            });
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('dragover');
+                const draggable = document.querySelector('.dragging');
+                if(!draggable) return;
+                
+                const targetId = draggable.getAttribute('data-target');
+                if(zone.id === targetId) {
+                    zone.appendChild(draggable);
+                    draggable.style.background = 'var(--sauge)';
+                    draggable.style.cursor = 'default';
+                    draggable.setAttribute('draggable', 'false');
+                } else {
+                    zone.style.borderColor = '#B5484D';
+                    setTimeout(() => zone.style.borderColor = 'var(--sauge)', 500);
+                }
+            });
+        });
+    });
     </script>
 </body>
 </html>
+
