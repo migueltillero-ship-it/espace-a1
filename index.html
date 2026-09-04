@@ -283,6 +283,14 @@
                     <button class="btn-prim">Accéder</button>
                 </div>
 
+                                <div class="carte-hub" onclick="naviguer('vue-stats')" style="border-top-color: var(--graphite); grid-column: 1 / -1;">
+                    <div style="text-align: center;">
+                        <h2>Mes Statistiques & Progression</h2>
+                        <p>Analysez vos performances, suivez vos scores d'acquisition et votre avancement dans l'ensemble des activités.</p>
+                    </div>
+                    <button class="btn-prim" style="max-width: 400px; margin: 0 auto; display: block;">Voir mon tableau de bord</button>
+                </div>
+
                 <div class="carte-hub" onclick="naviguer('vue-jeux')" style="border-top-color: var(--sauge); grid-column: 1 / -1;">
                     <div style="text-align: center;">
                         <h2>Vocabulaire & Jeux</h2>
@@ -912,6 +920,54 @@
         </div>
     </div>
 
+        <!-- ================= STATISTIQUES ================= -->
+    <div id="vue-stats" class="vue">
+        <header style="background: linear-gradient(135deg, var(--graphite) 0%, #2B5C8F 100%);">
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur">Évaluation Formative</div>
+            <h1>Mon Tableau de Bord</h1>
+            <p>Visualisez vos performances analytiques sur l'ensemble des modules du niveau A1.</p>
+        </header>
+
+        <div class="conteneur">
+            <div class="section-cours">
+                <h3>Bilan d'Acquisition</h3>
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 3rem;">
+                    <div style="background: #FDFCF8; padding: 2rem; border-radius: 8px; border-top: 4px solid var(--bleu-institutionnel); text-align: center; flex: 1; min-width: 200px; box-shadow: var(--shadow-subtile);">
+                        <div style="font-size: 3.5rem; font-family: var(--font-titre); color: var(--bleu-institutionnel); font-weight: 700;" id="stat-global-score">0%</div>
+                        <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--graphite); font-weight: 700;">Taux de réussite global</div>
+                    </div>
+                    <div style="background: #FDFCF8; padding: 2rem; border-radius: 8px; border-top: 4px solid var(--sauge); text-align: center; flex: 1; min-width: 200px; box-shadow: var(--shadow-subtile);">
+                        <div style="font-size: 3.5rem; font-family: var(--font-titre); color: var(--sauge); font-weight: 700;" id="stat-quiz-termines">0/4</div>
+                        <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--graphite); font-weight: 700;">Quiz Complétés</div>
+                    </div>
+                </div>
+
+                <h3>Détail par Module</h3>
+                <div style="overflow-x: auto;">
+                    <table class="tableau-temps" style="width: 100%; min-width: 600px;">
+                        <thead>
+                            <tr>
+                                <th>Module</th>
+                                <th>Statut du Quiz</th>
+                                <th>Meilleur Score</th>
+                                <th>Validation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="corps-tableau-stats">
+                            <!-- Rempli par JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="text-align: center; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--gris-doux);">
+                    <p style="color: #888; font-size: 0.95rem; margin-bottom: 1.5rem;">Si vous souhaitez recommencer à zéro, vous pouvez effacer toutes vos données de progression.</p>
+                    <button class="btn-recommencer" onclick="reinitialiserTout()" style="background: #B5484D; border-color: #B5484D;">Effacer mes données</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ================= VOCABULAIRE & JEUX ================= -->
     <div id="vue-jeux" class="vue">
         <header style="background: linear-gradient(135deg, var(--sauge) 0%, #3D5A47 100%);">
@@ -1407,7 +1463,75 @@
             });
         });
     });
+        /* ============================================================
+       TABLEAU DE BORD (Moteur d'analytique)
+       ============================================================ */
+    function majTableauDeBord() {
+        const p = chargerProgres();
+        const modules = ['mod1', 'mod2', 'mod3', 'mod4'];
+        const noms = ['Premiers Contacts', 'Portrait-robot & Nombres', 'État Civil & Identité', 'Le Logement'];
+        
+        let quizTermines = 0;
+        let sommeScores = 0;
+        let totalQuestions = 0;
+        let htmlTableau = '';
+
+        modules.forEach((m, index) => {
+            const info = p[m];
+            let statut = '<span style="color: #888;">Non commencé</span>';
+            let scoreTexte = '-';
+            let validation = '<span style="background: #EAE6E1; color: var(--graphite); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">En attente</span>';
+            
+            if (info) {
+                quizTermines++;
+                sommeScores += info.score;
+                totalQuestions += info.total;
+                scoreTexte = info.score + ' / ' + info.total;
+                
+                if (info.score === info.total) {
+                    statut = '<span style="color: var(--sauge); font-weight: 700;">Terminé</span>';
+                    validation = '<span style="background: var(--sauge); color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">Acquis</span>';
+                } else {
+                    statut = '<span style="color: var(--bleu-institutionnel); font-weight: 700;">En cours</span>';
+                    validation = '<span style="background: #F4EDDC; color: var(--graphite); border: 1px solid #D4AF37; padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase;">À réviser</span>';
+                }
+            }
+
+            htmlTableau += `
+                <tr>
+                    <td style="font-weight: 700; color: var(--graphite);">${noms[index]}</td>
+                    <td>${statut}</td>
+                    <td style="font-weight: 700;">${scoreTexte}</td>
+                    <td>${validation}</td>
+                </tr>
+            `;
+        });
+
+        document.getElementById('corps-tableau-stats').innerHTML = htmlTableau;
+        document.getElementById('stat-quiz-termines').textContent = quizTermines + ' / 4';
+        
+        let pctGlobal = totalQuestions > 0 ? Math.round((sommeScores / totalQuestions) * 100) : 0;
+        document.getElementById('stat-global-score').textContent = pctGlobal + '%';
+    }
+
+    function reinitialiserTout() {
+        if(confirm("Attention : Cette action effacera définitivement toute votre progression (quiz, jeux, scores). Voulez-vous continuer\u202f?")) {
+            localStorage.removeItem('espaceA1Progres');
+            location.reload();
+        }
+    }
+
+    // Interception de la navigation pour rafraîchir les statistiques en temps réel
+    const ancienneNavigation = naviguer;
+    naviguer = function(id) {
+        ancienneNavigation(id);
+        if (id === 'vue-stats') {
+            majTableauDeBord();
+        }
+    };
+
     </script>
 </body>
 </html>
+
 
