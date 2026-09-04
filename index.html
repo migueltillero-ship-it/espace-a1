@@ -1,0 +1,493 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Espace Virtuel d'Excellence - Français A1">
+    <title>Espace A1 | Professeur Miguel Tillero</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --graphite: #1C2321;
+            --ivoire: #F9F8F6;
+            --bleu-institutionnel: #2B5C8F;
+            --sauge: #557A64;
+            --gris-doux: #EAE6E1;
+            --texte-clair: #FAF9F6;
+            --texte-sombre: #2B2B2B;
+            --font-titre: 'Playfair Display', serif;
+            --font-texte: 'Lato', sans-serif;
+            --shadow-subtile: 0 8px 30px rgba(28, 35, 33, 0.08);
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: var(--font-texte); background-color: var(--ivoire); color: var(--texte-sombre); line-height: 1.7; overflow-x: hidden; }
+        
+        .vue { display: none; opacity: 0; transition: opacity 0.6s ease; min-height: 100vh; padding-bottom: 5rem; }
+        .vue.active { display: block; opacity: 1; animation: fadeIn 0.6s forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        header { background: linear-gradient(135deg, var(--graphite) 0%, #21303F 100%); color: var(--texte-clair); padding: 5rem 2rem; text-align: center; border-bottom: 4px solid var(--bleu-institutionnel); position: relative; }
+        .titre-professeur { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 4px; color: var(--bleu-institutionnel); margin-bottom: 1.5rem; font-weight: 700; }
+        header h1 { font-family: var(--font-titre); font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem; }
+        header p { max-width: 800px; margin: 0 auto; font-size: 1.15rem; color: #D1D5D2; font-weight: 300; }
+        
+        .btn-retour { position: absolute; top: 2rem; left: 2rem; background: rgba(255,255,255,0.05); color: var(--bleu-institutionnel); border: 1px solid var(--bleu-institutionnel); padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; transition: all 0.3s ease; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1.5px; font-weight: 700; backdrop-filter: blur(5px); }
+        .btn-retour:hover { background: var(--bleu-institutionnel); color: var(--texte-clair); }
+        
+        .conteneur { max-width: 1100px; margin: -4rem auto 0; padding: 0 2rem; position: relative; z-index: 10; }
+        .grille-hub { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        
+        .carte-hub { background: #FFFFFF; border-radius: 8px; padding: 3rem 2.5rem; box-shadow: var(--shadow-subtile); border-top: 6px solid var(--graphite); cursor: pointer; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s; display: flex; flex-direction: column; justify-content: space-between; }
+        .carte-hub:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+        .carte-hub.assignations { border-top-color: var(--bleu-institutionnel); grid-column: 1 / -1; }
+        
+        .carte-hub h2 { font-family: var(--font-titre); color: var(--graphite); font-size: 1.7rem; margin-bottom: 1.2rem; }
+        .carte-hub p { color: #5C5C5C; margin-bottom: 2.5rem; font-size: 1.05rem; }
+        
+        .btn-prim { background: var(--graphite); color: var(--texte-clair); border: none; padding: 1.2rem 2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background 0.3s; border-radius: 4px; width: 100%; font-weight: 700; font-family: var(--font-texte); }
+        .btn-prim:hover { background: var(--bleu-institutionnel); }
+        .assignations .btn-prim { background: var(--bleu-institutionnel); color: white; max-width: 400px; margin: 0 auto; display: block; }
+        
+        /* Composants de cours */
+        .section-cours { background: #FFFFFF; padding: 3.5rem; margin-bottom: 3rem; border-radius: 8px; box-shadow: var(--shadow-subtile); }
+        .section-cours h3 { font-family: var(--font-titre); font-size: 2.2rem; color: var(--graphite); border-bottom: 2px solid var(--gris-doux); padding-bottom: 1rem; margin-bottom: 2.5rem; }
+        
+        .encadre-grammaire { background: #FDFCF8; border-left: 5px solid var(--bleu-institutionnel); padding: 2.5rem; margin-bottom: 3rem; border-radius: 0 8px 8px 0; }
+        .encadre-grammaire h4 { font-family: var(--font-titre); color: var(--bleu-institutionnel); font-size: 1.5rem; margin-bottom: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+        .encadre-grammaire ul { margin-left: 1.8rem; margin-bottom: 1rem; }
+        .encadre-grammaire li { margin-bottom: 0.8rem; font-size: 1.05rem; }
+        .exemple { border-left: 3px solid var(--sauge); padding: 0.8rem 0 0.8rem 1.2rem; margin: 1.2rem 0; color: #4A4A4A; background: rgba(85, 122, 100, 0.05); }
+        .exemple b { color: var(--graphite); }
+        code { background: #EFEBE0; color: var(--graphite); padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 1rem; font-family: var(--font-texte); }
+
+        /* Tableau de grammaire */
+        .tableau-temps { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: 1rem; }
+        .tableau-temps th, .tableau-temps td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--gris-doux); }
+        .tableau-temps th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bleu-institutionnel); font-weight: 700; background: #F4F7F9; }
+        .tableau-temps td:first-child { font-weight: 700; color: var(--graphite); }
+
+        /* Cahier de Textes / Assignations */
+        .carousel-seances { display: flex; gap: 2rem; overflow-x: auto; padding: 1rem 0 3rem; scroll-snap-type: x mandatory; align-items: stretch; }
+        .fiche-seance { background: #fff; border-radius: 8px; min-width: 360px; max-width: 400px; flex: 0 0 auto; box-shadow: var(--shadow-subtile); border-top: 6px solid var(--bleu-institutionnel); scroll-snap-align: start; display: flex; flex-direction: column; transition: transform 0.3s; }
+        .fiche-seance:hover { transform: translateY(-5px); }
+        .fiche-entete { background: #FDFCF8; padding: 1.5rem; border-bottom: 1px solid var(--gris-doux); border-radius: 8px 8px 0 0; }
+        .fiche-date { font-family: var(--font-titre); font-size: 1.4rem; color: var(--graphite); font-weight: 700; }
+        .fiche-contenu { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
+        .fiche-contenu h4 { color: var(--sauge); font-size: 1.05rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+        .carousel-seances::-webkit-scrollbar { height: 10px; }
+        .carousel-seances::-webkit-scrollbar-track { background: #EAE6E1; border-radius: 5px; }
+        .carousel-seances::-webkit-scrollbar-thumb { background: var(--bleu-institutionnel); border-radius: 5px; border: 2px solid #EAE6E1; }
+        .fiche-seance.future { border-top-color: var(--gris-doux); opacity: 0.8; }
+        .fiche-seance.future .fiche-entete { background: #F5F5F5; }
+        .fiche-seance.future .fiche-date { color: #888; }
+        .tache-consigne { background: rgba(43, 92, 143, 0.05); border-radius: 6px; padding: 1.2rem; font-size: 0.95rem; border-left: 3px solid var(--bleu-institutionnel); }
+
+        footer { text-align: center; padding: 5rem 1rem 3rem; color: #888; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <!-- ================= ACCUEIL ================= -->
+    <div id="vue-hub" class="vue active">
+        <header>
+            <div class="titre-professeur">Professeur Miguel Tillero</div>
+            <h1>Espace Hybride A1</h1>
+            <p>Espace de travail interactif. Les fondations de la langue française&#8239;: interactions, grammaire et vocabulaire du quotidien.</p>
+        </header>
+
+        <div class="conteneur">
+            <div class="grille-hub">
+                <div class="carte-hub assignations" onclick="naviguer('vue-assignations')">
+                    <div style="text-align: center;">
+                        <h2>Cahier de Textes</h2>
+                        <p>Consultez le journal de nos séances ainsi que les activités préparatoires assignées pour nos rencontres synchrones et asynchrones.</p>
+                    </div>
+                    <button class="btn-prim">Ouvrir le cahier</button>
+                </div>
+                
+                <div class="carte-hub" onclick="naviguer('vue-mod1')">
+                    <div>
+                        <h2>Module 1&#8239;: Premiers Contacts</h2>
+                        <p>Saluer, prendre congé, le verbe <b>s'appeler</b>, les pronoms sujets et les pronoms toniques.</p>
+                    </div>
+                    <button class="btn-prim">Accéder</button>
+                </div>
+
+                <div class="carte-hub" onclick="naviguer('vue-mod2')">
+                    <div>
+                        <h2>Module 2&#8239;: Portrait-robot & Nombres</h2>
+                        <p>Les verbes <b>être</b> et <b>avoir</b>, la numération de 0 à 100, et la formation du féminin pour les métiers.</p>
+                    </div>
+                    <button class="btn-prim">Accéder</button>
+                </div>
+
+                <div class="carte-hub" onclick="naviguer('vue-mod3')">
+                    <div>
+                        <h2>Module 3&#8239;: État Civil & Identité</h2>
+                        <p>Décrire une personne, identifier son statut (<b>C'est</b> vs <b>Il est</b>) et accorder les nationalités.</p>
+                    </div>
+                    <button class="btn-prim">Accéder</button>
+                </div>
+
+                <div class="carte-hub" onclick="naviguer('vue-mod4')">
+                    <div>
+                        <h2>Module 4&#8239;: Le Logement</h2>
+                        <p>Décrire son espace de vie (<b>Il y a / Il n'y a pas de</b>), situer les meubles et exprimer l'obligation.</p>
+                    </div>
+                    <button class="btn-prim">Accéder</button>
+                </div>
+            </div>
+        </div>
+        <footer>
+            © 2026 Espace Hybride A1 &nbsp;|&nbsp; Direction Pédagogique&#8239;: Professeur Miguel Tillero
+        </footer>
+    </div>
+
+    <!-- ================= CAHIER DE TEXTES ================= -->
+    <div id="vue-assignations" class="vue">
+        <header style="background: linear-gradient(135deg, var(--graphite) 0%, #1A2530 100%);">
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur">Suivi Pédagogique A1</div>
+            <h1>Cahier de Textes & Devoirs</h1>
+            <p>Retrouvez ici le journal de nos séances. Glissez vers la droite pour consulter les assignations de chaque cours.</p>
+        </header>
+
+        <div class="conteneur">
+            <div class="carousel-seances">
+                
+                <!-- SÉANCE 1 -->
+                <div class="fiche-seance">
+                    <div class="fiche-entete">
+                        <div class="fiche-date">Mercredi 2 septembre</div>
+                        <div style="font-size: 0.85rem; color: var(--bleu-institutionnel); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; font-weight: 700;">Séance 1 — Premiers contacts</div>
+                    </div>
+                    <div class="fiche-contenu">
+                        <h4>Salutations et Pronoms</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: #4A4A4A; line-height: 1.5;">Les bases indispensables (Dossier de Découverte)&#8239;: saluer de manière formelle et informelle, utiliser le verbe <b>s'appeler</b> et maîtriser les pronoms toniques.</p>
+                        
+                        <div class="tache-consigne">
+                            <b style="color: var(--bleu-institutionnel);">Mission à préparer&#8239;: La rencontre</b><br><br>
+                            Rédigez un court dialogue (6 à 8 répliques) entre deux personnes qui se rencontrent pour la première fois. Le dialogue doit inclure&#8239;:<br>
+                            <ul style="margin-top: 0.8rem; margin-bottom: 0; padding-left: 1.2rem;">
+                                <li>Des salutations formelles.</li>
+                                <li>L'utilisation du verbe <i>s'appeler</i>.</li>
+                                <li>L'utilisation de pronoms toniques pour insister (<i>Et vous&#8239;?, Moi, je m'appelle...</i>).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SÉANCE 2 -->
+                <div class="fiche-seance">
+                    <div class="fiche-entete">
+                        <div class="fiche-date">Lundi 7 septembre</div>
+                        <div style="font-size: 0.85rem; color: var(--bleu-institutionnel); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; font-weight: 700;">Séance 2 — Portrait-robot</div>
+                    </div>
+                    <div class="fiche-contenu">
+                        <h4>Identité et Nombres</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: #4A4A4A; line-height: 1.5;">Nous entamons l'Unité 1. Au programme&#8239;: dire son âge avec le verbe <b>avoir</b>, exprimer sa profession avec le verbe <b>être</b> et maîtriser les nombres jusqu'à 100.</p>
+                        
+                        <div class="tache-consigne">
+                            <b style="color: var(--bleu-institutionnel);">Mission à préparer&#8239;: Autoportrait en chiffres</b><br><br>
+                            Créez votre profil de présentation. Rédigez un court texte (4 à 5 phrases) contenant&#8239;:<br>
+                            <ul style="margin-top: 0.8rem; margin-bottom: 0; padding-left: 1.2rem;">
+                                <li>Votre âge exact (<i>J'ai...</i>).</li>
+                                <li>Votre profession accordée (<i>Je suis...</i>).</li>
+                                <li>Trois nombres importants pour vous.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SÉANCE 3 -->
+                <div class="fiche-seance">
+                    <div class="fiche-entete">
+                        <div class="fiche-date">Mercredi 9 septembre</div>
+                        <div style="font-size: 0.85rem; color: var(--bleu-institutionnel); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; font-weight: 700;">Séance 3 — L'évolution du couple</div>
+                    </div>
+                    <div class="fiche-contenu">
+                        <h4>Vocabulaire et Grammaire</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: #4A4A4A; line-height: 1.5;">Vocabulaire de l'état civil (marié, célibataire) et différence d'utilisation entre <b>C'est</b> et <b>Il/Elle est</b> pour présenter quelqu'un.</p>
+                        
+                        <div class="tache-consigne">
+                            <b style="color: var(--bleu-institutionnel);">Mission à préparer&#8239;:</b><br><br>
+                            Choisissez une célébrité. Préparez une courte présentation en utilisant&#8239;:<br>
+                            <ul style="margin-top: 0.8rem; margin-bottom: 0; padding-left: 1.2rem;">
+                                <li>C'est + nom propre</li>
+                                <li>Il/Elle est + profession</li>
+                                <li>Au moins une nationalité accordée.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SÉANCE 4 -->
+                <div class="fiche-seance">
+                    <div class="fiche-entete">
+                        <div class="fiche-date">Lundi 14 septembre</div>
+                        <div style="font-size: 0.85rem; color: var(--bleu-institutionnel); text-transform: uppercase; letter-spacing: 2px; margin-top: 5px; font-weight: 700;">Séance 4 — Construire et Créer</div>
+                    </div>
+                    <div class="fiche-contenu">
+                        <h4>Le logement et l'aménagement</h4>
+                        <p style="font-size: 0.95rem; margin-bottom: 1.5rem; color: #4A4A4A; line-height: 1.5;">Lexique des pièces de la maison et structure de description <b>Il y a / Il n'y a pas de</b>.</p>
+                        
+                        <div class="tache-consigne">
+                            <b style="color: var(--bleu-institutionnel);">Mission à préparer&#8239;:</b><br><br>
+                            Dessinez le plan de votre appartement idéal. Rédigez un court texte descriptif en utilisant&#8239;:<br>
+                            <ul style="margin-top: 0.8rem; margin-bottom: 0; padding-left: 1.2rem;">
+                                <li>La structure <i>Il y a / Il n'y a pas de</i>.</li>
+                                <li>Au moins quatre prépositions de localisation.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODULE 1 (Dossier Découverte) ================= -->
+    <div id="vue-mod1" class="vue">
+        <header>
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur">Dossier de Découverte</div>
+            <h1>Premiers Contacts</h1>
+        </header>
+        <div class="conteneur">
+            <div class="section-cours">
+                <h3>Saluer et prendre congé</h3>
+                <div class="encadre-grammaire">
+                    <h4>Le registre formel vs informel</h4>
+                    <p>En français, on adapte ses salutations selon la personne à qui l'on s'adresse.</p>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Formel (Vous)</th><th>Informel (Tu)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Bonjour, Monsieur / Madame.</td><td>Salut !</td></tr>
+                            <tr><td>Comment allez-vous&#8239;?</td><td>Comment ça va&#8239;? / Ça va&#8239;?</td></tr>
+                            <tr><td>Au revoir.</td><td>Salut&#8239;! / Ciao&#8239;!</td></tr>
+                            <tr><td>Bonne journée.</td><td>À plus&#8239;!</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Se présenter : Le verbe s'appeler</h3>
+                <div class="encadre-grammaire">
+                    <h4>Conjugaison au présent</h4>
+                    <p>Le verbe <b>s'appeler</b> est un verbe pronominal (il utilise un pronom réfléchi). Attention au doublement de la lettre <b>L</b> pour je, tu, il/elle/on et ils/elles.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td>Je <b>m'appelle</b></td><td>Nous <b>nous appelons</b></td></tr>
+                            <tr><td>Tu <b>t'appelles</b></td><td>Vous <b>vous appelez</b></td></tr>
+                            <tr><td>Il/Elle/On <b>s'appelle</b></td><td>Ils/Elles <b>s'appellent</b></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Les Pronoms Personnels</h3>
+                <div class="encadre-grammaire">
+                    <h4>Sujets et Toniques</h4>
+                    <p>Les pronoms <b>sujets</b> font l'action du verbe. Les pronoms <b>toniques</b> s'utilisent pour insister sur la personne, souvent placés en début de phrase ou après une préposition.</p>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Pronoms Sujets</th><th>Pronoms Toniques</th></tr></thead>
+                        <tbody>
+                            <tr><td><b>Je</b> m'appelle...</td><td><b>Moi</b>, je m'appelle...</td></tr>
+                            <tr><td><b>Tu</b> t'appelles...</td><td>Et <b>toi</b>&#8239;?</td></tr>
+                            <tr><td><b>Il / Elle</b> s'appelle...</td><td>C'est <b>lui</b> / C'est <b>elle</b>.</td></tr>
+                            <tr><td><b>Nous</b> sommes...</td><td><b>Nous</b>, nous sommes...</td></tr>
+                            <tr><td><b>Vous</b> êtes...</td><td>Et <b>vous</b>&#8239;?</td></tr>
+                            <tr><td><b>Ils / Elles</b> sont...</td><td>Ce sont <b>eux</b> / Ce sont <b>elles</b>.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODULE 2 (Unité 1) ================= -->
+    <div id="vue-mod2" class="vue">
+        <header>
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur">Unité 1</div>
+            <h1>Portrait-robot & Nombres</h1>
+        </header>
+        <div class="conteneur">
+            <div class="section-cours">
+                <h3>Les Verbes Être et Avoir</h3>
+                <div class="encadre-grammaire">
+                    <h4>Dire son âge (Le verbe AVOIR)</h4>
+                    <p>En français, on utilise obligatoirement le verbe <b>avoir</b> pour exprimer l'âge.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td>J'<b>ai</b> 21 ans.</td><td>Nous <b>avons</b> 30 ans.</td></tr>
+                            <tr><td>Tu <b>as</b> 25 ans.</td><td>Vous <b>avez</b> 40 ans.</td></tr>
+                            <tr><td>Il/Elle/On <b>a</b> 32 ans.</td><td>Ils/Elles <b>ont</b> 50 ans.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="encadre-grammaire">
+                    <h4>Dire sa profession (Le verbe ÊTRE)</h4>
+                    <p>On utilise le verbe <b>être</b> suivi directement de la profession. On ne met <b>jamais</b> d'article (un/une) entre le verbe et le métier.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td>Je <b>suis</b></td><td>Nous <b>sommes</b></td></tr>
+                            <tr><td>Tu <b>es</b></td><td>Vous <b>êtes</b></td></tr>
+                            <tr><td>Il/Elle/On <b>est</b></td><td>Ils/Elles <b>sont</b></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exemple">Je suis infirmier.<br>Elle est avocate.</div>
+                </div>
+
+                <h3>Le Féminin des Métiers</h3>
+                <div class="encadre-grammaire">
+                    <h4>Formation du féminin</h4>
+                    <p>En général, le féminin se forme avec le masculin + <b>e</b> (ex&#8239;: <i>étudiant</i> ➔ <i>étudiant<b>e</b></i>).</p>
+                    <p>Quand le masculin se termine déjà par un <b>-e</b>, le féminin a exactement la même forme.</p>
+                    <p style="margin-top: 1.5rem; font-weight: 700; color: var(--bleu-institutionnel);">Certains féminins ont une formation particulière&#8239;:</p>
+                    <ul>
+                        <li><b>-er</b> ➔ <b>-ère</b> (infirmier ➔ infirmière)</li>
+                        <li><b>-ien</b> ➔ <b>-ienne</b> (informaticien ➔ informaticienne)</li>
+                        <li><b>-eur</b> ➔ <b>-euse</b> (vendeur ➔ vendeuse)</li>
+                        <li><b>-teur</b> ➔ <b>-trice</b> (agriculteur ➔ agricultrice)</li>
+                    </ul>
+                </div>
+
+                <h3>Les Nombres</h3>
+                <div class="encadre-grammaire">
+                    <h4>Les nombres à partir de 20</h4>
+                    <p>Faites très attention aux nombres composés et aux spécificités de la numération à partir de 70.</p>
+                    <ul>
+                        <li><b>21, 31, 41...</b> prennent la conjonction «&#8239;et&#8239;» (vingt-et-un). Les autres prennent un tiret (vingt-deux).</li>
+                        <li><b>70</b> s'écrit soixante-dix (60 + 10).</li>
+                        <li><b>80</b> s'écrit quatre-vingts. Attention, il prend un "s" seulement s'il n'est pas suivi d'un autre nombre (quatre-vingt-deux).</li>
+                        <li><b>90</b> s'écrit quatre-vingt-dix (80 + 10).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODULE 3 (Unité 3) ================= -->
+    <div id="vue-mod3" class="vue">
+        <header>
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur">Unité 3</div>
+            <h1>État Civil & Identité</h1>
+        </header>
+        <div class="conteneur">
+            <div class="section-cours">
+                <h3>L'Accord de l'Adjectif et des Nationalités</h3>
+                <div class="encadre-grammaire">
+                    <h4>La règle générale</h4>
+                    <p>En français, le féminin se forme généralement en ajoutant un <b>-e</b> à l'adjectif masculin. Le pluriel se forme en ajoutant un <b>-s</b>.</p>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Masculin</th><th>Féminin</th></tr></thead>
+                        <tbody>
+                            <tr><td>marié</td><td>marié<b>e</b></td></tr>
+                            <tr><td>divorcé</td><td>divorcé<b>e</b></td></tr>
+                            <tr><td>espagnol</td><td>espagnol<b>e</b></td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem;"><b>Attention&#8239;:</b> Quand l'adjectif masculin se termine déjà par un <b>-e</b>, le féminin a la même forme.</p>
+                </div>
+
+                <div class="encadre-grammaire">
+                    <h4>Le cas particulier des nationalités</h4>
+                    <p>Quand l'adjectif de nationalité se termine par <b>-ien</b> au masculin, la consonne double au féminin pour devenir <b>-ienne</b>.</p>
+                    <div class="exemple">
+                        Il est Ital<b>ien</b>. ➔ Elle est Ital<b>ienne</b>.<br>
+                        Il est Canad<b>ien</b>. ➔ Elle est Canad<b>ienne</b>.
+                    </div>
+                </div>
+
+                <h3>Présenter quelqu'un : C'est vs Il / Elle est</h3>
+                <div class="encadre-grammaire">
+                    <h4>Identifier ou présenter avec C'EST</h4>
+                    <p>On utilise <b>C'est</b> pour présenter une personne spécifique ou pour identifier quelque chose. Il est toujours suivi d'un déterminant ou d'un nom propre.</p>
+                    <div class="exemple">
+                        <b>C'est + Nom propre&#8239;:</b> C'est François. C'est Nicolas.<br>
+                        <b>C'est + Article + Nom commun&#8239;:</b> C'est mon mari. C'est un étudiant.
+                    </div>
+                </div>
+
+                <div class="encadre-grammaire">
+                    <h4>Caractériser avec IL EST / ELLE EST</h4>
+                    <p>On utilise <b>Il est</b> ou <b>Elle est</b> pour donner une caractéristique (profession, nationalité, état civil). On n'utilise <b>jamais</b> d'article devant les professions dans ce cas.</p>
+                    <div class="exemple">
+                        <b>Il/Elle est + Adjectif (état civil / nationalité)&#8239;:</b> Elle est divorcée. Il est français.<br>
+                        <b>Il/Elle est + Profession (sans article)&#8239;:</b> Elle est journaliste. Il est professeur.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= MODULE 4 (Unité 4) ================= -->
+    <div id="vue-mod4" class="vue">
+        <header>
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur">Unité 4</div>
+            <h1>Le Logement et l'Espace</h1>
+        </header>
+        <div class="conteneur">
+            <div class="section-cours">
+                <h3>Décrire l'existence avec IL Y A</h3>
+                <div class="encadre-grammaire">
+                    <h4>L'affirmation et la négation</h4>
+                    <p>Pour indiquer la présence de quelque chose dans une pièce, on utilise <b>Il y a</b> suivi d'un article indéfini (un, une, des) ou d'un chiffre.</p>
+                    <div class="exemple">
+                        Dans la maison, <b>il y a</b> une véranda.<br>
+                        À l'étage, <b>il y a</b> trois chambres.
+                    </div>
+                    <p style="margin-top: 1rem;">À la forme négative, les articles se transforment toujours en <b>de</b> ou <b>d'</b>.</p>
+                    <div class="exemple">
+                        Dans cette maison, <b>il n'y a pas de</b> véranda.<br>
+                        Chez moi, <b>il n'y a pas d'</b>ascenseur.
+                    </div>
+                </div>
+
+                <h3>Les prépositions de localisation</h3>
+                <div class="encadre-grammaire">
+                    <h4>Situer les meubles dans l'espace</h4>
+                    <p>Pour aménager un espace, l'utilisation des prépositions est essentielle.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td><b>à gauche (de)</b></td><td>Le bureau est à gauche de la porte.</td></tr>
+                            <tr><td><b>à droite (de)</b></td><td>Le fauteuil est à droite du canapé.</td></tr>
+                            <tr><td><b>à côté (de)</b></td><td>La table est à côté de la fenêtre.</td></tr>
+                            <tr><td><b>devant / derrière</b></td><td>Ne placez pas le bureau devant un mur.</td></tr>
+                            <tr><td><b>en face (de)</b></td><td>Mettez les fauteuils en face du canapé.</td></tr>
+                            <tr><td><b>entre</b></td><td>La table basse est entre les deux fauteuils.</td></tr>
+                            <tr><td><b>sur / sous</b></td><td>Le chat est sous la table.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Exprimer l'obligation</h3>
+                <div class="encadre-grammaire">
+                    <h4>Il faut vs Devoir</h4>
+                    <p>Pour donner des conseils, on utilise l'obligation impersonnelle (<b>Il faut</b>) ou personnelle (le verbe <b>Devoir</b>).</p>
+                    <div class="exemple">
+                        <b>Il faut + Infinitif&#8239;:</b> Il faut mettre les plantes dans les coins.<br>
+                        <b>Il ne faut pas + Infinitif&#8239;:</b> Il ne faut pas placer le canapé devant la fenêtre.
+                    </div>
+                    <p style="margin-top: 1rem;">Le verbe <b>Devoir</b> s'accorde avec le sujet.</p>
+                    <div class="exemple">
+                        Pour avoir une maison feng shui, <b>vous devez suivre</b> quelques règles.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= SCRIPTS ================= -->
+    <script>
+        function naviguer(id) {
+            window.scrollTo(0, 0); 
+            document.querySelectorAll('.vue').forEach(el => el.classList.remove('active')); 
+            setTimeout(() => document.getElementById(id).classList.add('active'), 50); 
+        }
+    </script>
+</body>
+</html>
