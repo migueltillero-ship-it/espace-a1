@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="clair">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,7 +21,7 @@
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-texte); background-color: var(--ivoire); color: var(--texte-sombre); line-height: 1.7; overflow-x: hidden; }
+        body { font-family: var(--font-texte); background-color: var(--ivoire); color: var(--texte-sombre); line-height: 1.7; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
         
         .vue { display: none; opacity: 0; transition: opacity 0.6s ease; min-height: 100vh; padding-bottom: 5rem; }
         .vue.active { display: block; opacity: 1; animation: fadeIn 0.6s forwards; }
@@ -38,18 +38,17 @@
         .conteneur { max-width: 1100px; margin: -4rem auto 0; padding: 0 2rem; position: relative; z-index: 10; }
         .grille-hub { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
         
-        .carte-hub { background: #FFFFFF; border-radius: 8px; padding: 3rem 2.5rem; box-shadow: var(--shadow-subtile); border-top: 6px solid var(--graphite); cursor: pointer; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s; display: flex; flex-direction: column; justify-content: space-between; }
+        .carte-hub { background: #FFFFFF; border-radius: 8px; padding: 3rem 2.5rem; box-shadow: var(--shadow-subtile); border-top: 6px solid var(--graphite); cursor: pointer; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
         .carte-hub:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
         .carte-hub.assignations { border-top-color: var(--bleu-institutionnel); grid-column: 1 / -1; }
         
         .carte-hub h2 { font-family: var(--font-titre); color: var(--graphite); font-size: 1.7rem; margin-bottom: 1.2rem; }
-        .carte-hub p { color: #5C5C5C; margin-bottom: 2.5rem; font-size: 1.05rem; }
+        .carte-hub p { color: #5C5C5C; margin-bottom: 1.5rem; font-size: 1.05rem; }
         
-        .btn-prim { background: var(--graphite); color: var(--texte-clair); border: none; padding: 1.2rem 2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background 0.3s; border-radius: 4px; width: 100%; font-weight: 700; font-family: var(--font-texte); }
+        .btn-prim { background: var(--graphite); color: var(--texte-clair); border: none; padding: 1.2rem 2rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: background 0.3s; border-radius: 4px; width: 100%; font-weight: 700; font-family: var(--font-texte); margin-top: 1rem; }
         .btn-prim:hover { background: var(--bleu-institutionnel); }
-        .assignations .btn-prim { background: var(--bleu-institutionnel); color: white; max-width: 400px; margin: 0 auto; display: block; }
+        .assignations .btn-prim { background: var(--bleu-institutionnel); color: white; max-width: 400px; margin: 1rem auto 0; display: block; }
         
-        /* Composants de cours */
         .section-cours { background: #FFFFFF; padding: 3.5rem; margin-bottom: 3rem; border-radius: 8px; box-shadow: var(--shadow-subtile); }
         .section-cours h3 { font-family: var(--font-titre); font-size: 2.2rem; color: var(--graphite); border-bottom: 2px solid var(--gris-doux); padding-bottom: 1rem; margin-bottom: 2.5rem; }
         
@@ -61,13 +60,11 @@
         .exemple b { color: var(--graphite); }
         code { background: #EFEBE0; color: var(--graphite); padding: 3px 8px; border-radius: 4px; font-weight: 700; font-size: 1rem; font-family: var(--font-texte); }
 
-        /* Tableau de grammaire */
         .tableau-temps { width: 100%; border-collapse: collapse; margin: 1.2rem 0; font-size: 1rem; }
         .tableau-temps th, .tableau-temps td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid var(--gris-doux); }
         .tableau-temps th { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--bleu-institutionnel); font-weight: 700; background: #F4F7F9; }
         .tableau-temps td:first-child { font-weight: 700; color: var(--graphite); }
 
-        /* Cahier de Textes / Assignations */
         .carousel-seances { display: flex; gap: 2rem; overflow-x: auto; padding: 1rem 0 3rem; scroll-snap-type: x mandatory; align-items: stretch; }
         .fiche-seance { background: #fff; border-radius: 8px; min-width: 360px; max-width: 400px; flex: 0 0 auto; box-shadow: var(--shadow-subtile); border-top: 6px solid var(--bleu-institutionnel); scroll-snap-align: start; display: flex; flex-direction: column; transition: transform 0.3s; }
         .fiche-seance:hover { transform: translateY(-5px); }
@@ -84,9 +81,117 @@
         .tache-consigne { background: rgba(43, 92, 143, 0.05); border-radius: 6px; padding: 1.2rem; font-size: 0.95rem; border-left: 3px solid var(--bleu-institutionnel); }
 
         footer { text-align: center; padding: 5rem 1rem 3rem; color: #888; font-size: 0.95rem; }
+
+        /* ============ MODE SOMBRE ============ */
+        html[data-theme="sombre"] body { background-color: #14181A; color: #E8E6E1; }
+        html[data-theme="sombre"] .carte-hub, html[data-theme="sombre"] .section-cours, html[data-theme="sombre"] .fiche-seance, html[data-theme="sombre"] .progression-carte { background: #1E2528; }
+        html[data-theme="sombre"] .encadre-grammaire { background: #232A28; }
+        html[data-theme="sombre"] .bloc-exercice, html[data-theme="sombre"] .quiz-option { background: #1B2224; }
+        html[data-theme="sombre"] .encadre-culture { background: linear-gradient(135deg, rgba(43,92,143,0.12), rgba(85,122,100,0.12)); border-color: #33393A; }
+        html[data-theme="sombre"] .carte-hub h2, html[data-theme="sombre"] .section-cours h3, html[data-theme="sombre"] .encadre-culture h4, html[data-theme="sombre"] .item-vocab b, html[data-theme="sombre"] .tableau-temps td:first-child, html[data-theme="sombre"] .quiz-enonce, html[data-theme="sombre"] .progression-carte .libelle, html[data-theme="sombre"] .stats-jeu, html[data-theme="sombre"] .flashcard-compteur { color: #F4F2EC; }
+        html[data-theme="sombre"] .carte-hub p, html[data-theme="sombre"] .item-vocab, html[data-theme="sombre"] .fiche-contenu p { color: #C3C7C4; }
+        html[data-theme="sombre"] .tableau-temps th { background: #232A28; }
+        html[data-theme="sombre"] .tableau-temps td, html[data-theme="sombre"] .encadre-grammaire li, html[data-theme="sombre"] .quiz-explication { color: #DAD8D2; border-color: #2C3234; }
+        html[data-theme="sombre"] code { background: #33393A; color: #F4F2EC; }
+        html[data-theme="sombre"] .fiche-entete { background: #232A28; border-color: #33393A; }
+        html[data-theme="sombre"] .quiz-option { color: #DAD8D2; border-color: #33393A; }
+        html[data-theme="sombre"] .btn-deck { background: #232A28; color: #DAD8D2; border-color: #33393A; }
+        html[data-theme="sombre"] .carte-memoire-arriere { background: #232A28; color: #F4F2EC; border-color: #33393A; }
+        html[data-theme="sombre"] .btn-outil { color: #F4F2EC; }
+
+        .barre-outils { position: fixed; top: 1.5rem; right: 1.5rem; z-index: 100; display: flex; gap: 0.6rem; }
+        .btn-outil { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.25); color: var(--texte-clair); width: auto; padding: 0 0.8rem; height: 36px; border-radius: 18px; cursor: pointer; font-size: 0.75rem; font-weight: 700; font-family: var(--font-texte); text-transform: uppercase; letter-spacing: 1px; backdrop-filter: blur(6px); transition: all 0.25s; display: flex; align-items: center; justify-content: center; }
+        .btn-outil:hover { background: var(--bleu-institutionnel); transform: scale(1.05); }
+
+        /* ============ AUDIO ============ */
+        .btn-audio { background: none; border: 1.5px solid var(--bleu-institutionnel); color: var(--bleu-institutionnel); width: auto; padding: 0 0.6rem; height: 26px; border-radius: 13px; cursor: pointer; font-size: 0.75rem; font-weight: 700; font-family: var(--font-texte); margin-left: 0.5rem; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; transition: all 0.25s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-audio:hover, .btn-audio.parle { background: var(--bleu-institutionnel); color: white; transform: scale(1.05); }
+
+        /* ============ PROGRESSION ============ */
+        .progression-globale { max-width: 1100px; margin: -2rem auto 2.5rem; padding: 0 2rem; position: relative; z-index: 10; }
+        .progression-carte { background: #FFFFFF; border-radius: 8px; padding: 1.5rem 2rem; box-shadow: var(--shadow-subtile); display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+        .progression-carte .libelle { font-weight: 700; color: var(--graphite); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap; }
+        .progression-piste { flex: 1; min-width: 180px; height: 10px; background: var(--gris-doux); border-radius: 10px; overflow: hidden; }
+        .progression-remplissage { height: 100%; background: linear-gradient(90deg, var(--bleu-institutionnel), var(--sauge)); border-radius: 10px; transition: width 0.6s ease; width: 0%; }
+        .progression-pct { font-family: var(--font-titre); font-weight: 700; color: var(--bleu-institutionnel); font-size: 1.1rem; min-width: 3rem; text-align: right; }
+        .badge-complet { display: inline-block; background: var(--sauge); color: white; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0.3rem 0.8rem; border-radius: 12px; margin-left: 0.6rem; }
+        .mini-progression { height: 6px; background: var(--gris-doux); border-radius: 6px; overflow: hidden; margin-top: 0.5rem; }
+        .mini-progression-remplissage { height: 100%; background: var(--sauge); border-radius: 6px; transition: width 0.5s ease; width: 0%; }
+
+        /* ============ QUIZ QCM ============ */
+        .quiz-intro { font-size: 0.98rem; color: #5C5C5C; margin-bottom: 2rem; }
+        html[data-theme="sombre"] .quiz-intro { color: #C3C7C4; }
+        .quiz-question { margin-bottom: 2.2rem; }
+        .quiz-enonce { font-size: 1.05rem; font-weight: 700; color: var(--graphite); margin-bottom: 1rem; }
+        .quiz-options { display: grid; gap: 0.7rem; }
+        .quiz-option { text-align: left; background: #FFFFFF; border: 2px solid var(--gris-doux); border-radius: 6px; padding: 0.9rem 1.2rem; font-size: 0.98rem; cursor: pointer; font-family: var(--font-texte); transition: all 0.2s; color: var(--texte-sombre); }
+        .quiz-option:hover:not(:disabled) { border-color: var(--bleu-institutionnel); background: #F4F7F9; }
+        .quiz-option.correcte { border-color: var(--sauge); background: rgba(85,122,100,0.15); font-weight: 700; }
+        .quiz-option.incorrecte { border-color: #B5484D; background: rgba(181,72,77,0.1); }
+        .quiz-option:disabled { cursor: default; opacity: 0.85; }
+        .quiz-explication { display: none; margin-top: 0.8rem; padding: 0.9rem 1.2rem; background: rgba(43,92,143,0.06); border-left: 3px solid var(--bleu-institutionnel); border-radius: 0 6px 6px 0; font-size: 0.92rem; color: #4A4A4A; }
+        .quiz-explication.visible { display: block; animation: fadeIn 0.3s forwards; }
+        .quiz-resultat { text-align: center; padding: 2.5rem; border-radius: 8px; background: linear-gradient(135deg, rgba(43,92,143,0.08), rgba(85,122,100,0.08)); display: none; }
+        .quiz-resultat.visible { display: block; animation: fadeIn 0.4s forwards; }
+        .quiz-resultat .score { font-family: var(--font-titre); font-size: 3rem; font-weight: 700; color: var(--bleu-institutionnel); }
+        .quiz-resultat .message { font-size: 1.1rem; margin: 0.8rem 0 1.2rem; color: var(--graphite); }
+        html[data-theme="sombre"] .quiz-resultat .message { color: #F4F2EC; }
+        .btn-recommencer { background: var(--graphite); color: white; border: none; padding: 0.9rem 1.8rem; border-radius: 4px; font-weight: 700; cursor: pointer; margin-top: 0.5rem; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.85rem; font-family: var(--font-texte); }
+        .btn-recommencer:hover { background: var(--bleu-institutionnel); }
+
+        /* ============ FICHES MEMO / FLASHCARDS ============ */
+        .zone-flashcard { max-width: 480px; margin: 0 auto 2rem; }
+        .flashcard { perspective: 1200px; height: 220px; cursor: pointer; }
+        .flashcard-face { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+        .flashcard.retournee .flashcard-face { transform: rotateY(180deg); }
+        .flashcard-avant, .flashcard-arriere { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; text-align: center; box-shadow: var(--shadow-subtile); }
+        .flashcard-avant { background: var(--graphite); color: white; }
+        .flashcard-arriere { background: var(--bleu-institutionnel); color: white; transform: rotateY(180deg); }
+        .flashcard-mot { font-family: var(--font-titre); font-size: 1.7rem; font-weight: 700; }
+        .flashcard-sous { font-size: 0.8rem; opacity: 0.75; text-transform: uppercase; letter-spacing: 2px; margin-top: 0.8rem; }
+        .flashcard-nav { display: flex; justify-content: center; align-items: center; gap: 1.2rem; margin-top: 1.5rem; }
+        .flashcard-nav button { background: var(--graphite); color: white; border: none; width: auto; padding: 0 1rem; height: 36px; border-radius: 18px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+        .flashcard-nav button:hover { background: var(--bleu-institutionnel); }
+        .flashcard-compteur { font-weight: 700; color: var(--graphite); min-width: 60px; text-align: center; }
+        .flashcard-astuce { text-align: center; font-size: 0.85rem; color: #888; margin-top: 1rem; }
+        .selecteur-deck { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; }
+        .btn-deck { background: white; border: 2px solid var(--gris-doux); padding: 0.6rem 1.3rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: var(--font-texte); color: var(--texte-sombre); }
+        .btn-deck.actif { background: var(--bleu-institutionnel); border-color: var(--bleu-institutionnel); color: white; }
+
+        /* ============ JEU DE MÉMOIRE ============ */
+        .grille-memoire { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; max-width: 900px; margin: 0 auto; }
+        .carte-memoire { aspect-ratio: 1; perspective: 900px; cursor: pointer; }
+        .carte-memoire-face { position: relative; width: 100%; height: 100%; transition: transform 0.4s; transform-style: preserve-3d; }
+        .carte-memoire.retournee .carte-memoire-face, .carte-memoire.trouvee .carte-memoire-face { transform: rotateY(180deg); }
+        .carte-memoire-avant, .carte-memoire-arriere { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 8px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0.6rem; font-size: 0.85rem; font-weight: 700; }
+        .carte-memoire-avant { background: linear-gradient(135deg, var(--graphite), #21303F); color: var(--bleu-institutionnel); font-size: 1.6rem; font-family: var(--font-titre); font-style: italic; }
+        .carte-memoire-arriere { background: white; color: var(--graphite); transform: rotateY(180deg); border: 2px solid var(--gris-doux); }
+        .carte-memoire.trouvee .carte-memoire-arriere { border-color: var(--sauge); background: rgba(85,122,100,0.15); }
+        .stats-jeu { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 2rem; font-family: var(--font-titre); font-size: 1.1rem; color: var(--graphite); flex-wrap: wrap; }
+        .stats-jeu span { font-weight: 700; color: var(--bleu-institutionnel); }
+        .bloc-jeu { background: #FFFFFF; padding: 3rem 2.5rem; border-radius: 8px; box-shadow: var(--shadow-subtile); margin-bottom: 3rem; }
+        html[data-theme="sombre"] .bloc-jeu { background: #1E2528; }
+        .bloc-jeu h3 { font-family: var(--font-titre); font-size: 1.8rem; color: var(--graphite); margin-bottom: 0.5rem; text-align: center; }
+        html[data-theme="sombre"] .bloc-jeu h3 { color: #F4F2EC; }
+        .bloc-jeu .sous-titre { text-align: center; color: #888; margin-bottom: 2rem; font-size: 0.95rem; }
+
+        /* ============ CONFETTIS ============ */
+        .confetti-conteneur { position: fixed; inset: 0; pointer-events: none; z-index: 999; overflow: hidden; }
+        .confetti-piece { position: absolute; top: -20px; width: 10px; height: 10px; border-radius: 2px; animation: tomber 2.8s linear forwards; }
+        @keyframes tomber { to { transform: translateY(105vh) rotate(600deg); opacity: 0.3; } }
+
+        @media (max-width: 600px) {
+            .barre-outils { top: 1rem; right: 1rem; }
+            .progression-carte { padding: 1.2rem 1.4rem; }
+            .section-cours, .bloc-jeu { padding: 2rem 1.5rem; }
+        }
     </style>
 </head>
 <body>
+
+    <div class="barre-outils">
+        <button class="btn-outil" id="btn-theme" onclick="basculerTheme()" title="Mode sombre / clair">Nuit</button>
+    </div>
 
     <!-- ================= ACCUEIL ================= -->
     <div id="vue-hub" class="vue active">
@@ -95,6 +200,14 @@
             <h1>Espace Hybride A1</h1>
             <p>Espace de travail interactif. Les fondations de la langue française&#8239;: interactions, grammaire et vocabulaire du quotidien.</p>
         </header>
+
+        <div class="progression-globale">
+            <div class="progression-carte">
+                <div class="libelle">Ma progression A1</div>
+                <div class="progression-piste"><div class="progression-remplissage" id="barre-progres-globale"></div></div>
+                <div class="progression-pct" id="pct-progres-globale">0%</div>
+            </div>
+        </div>
 
         <div class="conteneur">
             <div class="grille-hub">
@@ -105,37 +218,49 @@
                     </div>
                     <button class="btn-prim">Ouvrir le cahier</button>
                 </div>
-                
-                <div class="carte-hub" onclick="naviguer('vue-mod1')">
+
+                <div class="carte-hub" onclick="naviguer('vue-mod1')" style="border-top-color: var(--bleu-institutionnel);">
                     <div>
-                        <h2>Module 1&#8239;: Premiers Contacts</h2>
-                        <p>Saluer, prendre congé, le verbe <b>s'appeler</b>, les pronoms sujets et les pronoms toniques.</p>
+                        <h2>Module 1&#8239;: Premiers Contacts <span class="badge-complet" id="badge-mod1" style="display:none;">Acquis</span></h2>
+                        <p>Saluer, prendre congé, le verbe <b>s'appeler</b>, les articles, les verbes en -ER et les pronoms.</p>
+                        <div class="mini-progression"><div class="mini-progression-remplissage" id="mini-mod1"></div></div>
                     </div>
                     <button class="btn-prim">Accéder</button>
                 </div>
 
-                <div class="carte-hub" onclick="naviguer('vue-mod2')">
+                <div class="carte-hub" onclick="naviguer('vue-mod2')" style="border-top-color: var(--bleu-institutionnel);">
                     <div>
-                        <h2>Module 2&#8239;: Portrait-robot & Nombres</h2>
-                        <p>Les verbes <b>être</b> et <b>avoir</b>, la numération de 0 à 100, et la formation du féminin pour les métiers.</p>
+                        <h2>Module 2&#8239;: Portrait-robot & Nombres <span class="badge-complet" id="badge-mod2" style="display:none;">Acquis</span></h2>
+                        <p>Les verbes <b>être</b>, <b>avoir</b> et <b>faire</b>, l'heure, les nombres et le féminin des métiers.</p>
+                        <div class="mini-progression"><div class="mini-progression-remplissage" id="mini-mod2"></div></div>
                     </div>
                     <button class="btn-prim">Accéder</button>
                 </div>
 
-                <div class="carte-hub" onclick="naviguer('vue-mod3')">
+                <div class="carte-hub" onclick="naviguer('vue-mod3')" style="border-top-color: var(--bleu-institutionnel);">
                     <div>
-                        <h2>Module 3&#8239;: État Civil & Identité</h2>
-                        <p>Décrire une personne, identifier son statut (<b>C'est</b> vs <b>Il est</b>) et accorder les nationalités.</p>
+                        <h2>Module 3&#8239;: État Civil & Identité <span class="badge-complet" id="badge-mod3" style="display:none;">Acquis</span></h2>
+                        <p>Décrire une personne, la famille, les adjectifs possessifs et les nationalités.</p>
+                        <div class="mini-progression"><div class="mini-progression-remplissage" id="mini-mod3"></div></div>
                     </div>
                     <button class="btn-prim">Accéder</button>
                 </div>
 
-                <div class="carte-hub" onclick="naviguer('vue-mod4')">
+                <div class="carte-hub" onclick="naviguer('vue-mod4')" style="border-top-color: var(--bleu-institutionnel);">
                     <div>
-                        <h2>Module 4&#8239;: Le Logement</h2>
-                        <p>Décrire son espace de vie (<b>Il y a / Il n'y a pas de</b>), situer les meubles et exprimer l'obligation.</p>
+                        <h2>Module 4&#8239;: Le Logement <span class="badge-complet" id="badge-mod4" style="display:none;">Acquis</span></h2>
+                        <p>Décrire son espace de vie, le verbe <b>aller</b>, les meubles et l'obligation.</p>
+                        <div class="mini-progression"><div class="mini-progression-remplissage" id="mini-mod4"></div></div>
                     </div>
                     <button class="btn-prim">Accéder</button>
+                </div>
+
+                <div class="carte-hub" onclick="naviguer('vue-jeux')" style="border-top-color: var(--sauge); grid-column: 1 / -1;">
+                    <div style="text-align: center;">
+                        <h2>Vocabulaire & Jeux</h2>
+                        <p>Fiches mémo à retourner, prononciation audio et jeu de mémoire pour réviser le vocabulaire des 4 modules en s'amusant.</p>
+                    </div>
+                    <button class="btn-prim" style="background: var(--sauge); max-width: 400px; margin: 0 auto; display: block;">Jouer et réviser</button>
                 </div>
             </div>
         </div>
@@ -172,7 +297,7 @@
                             <ul style="margin-top: 0.8rem; margin-bottom: 0; padding-left: 1.2rem;">
                                 <li>Des salutations formelles.</li>
                                 <li>L'utilisation du verbe <i>s'appeler</i>.</li>
-                                <li>L'utilisation de pronoms toniques pour insister (<i>Et vous&#8239;?, Moi, je m'appelle...</i>).</li>
+                                <li>L'utilisation de pronoms toniques pour insister.</li>
                             </ul>
                         </div>
                     </div>
@@ -247,7 +372,7 @@
         </div>
     </div>
 
-    <!-- ================= MODULE 1 (Dossier Découverte) ================= -->
+    <!-- ================= MODULE 1 (Dossier de Découverte) ================= -->
     <div id="vue-mod1" class="vue">
         <header>
             <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
@@ -263,8 +388,8 @@
                     <table class="tableau-temps">
                         <thead><tr><th>Formel (Vous)</th><th>Informel (Tu)</th></tr></thead>
                         <tbody>
-                            <tr><td>Bonjour, Monsieur / Madame.</td><td>Salut !</td></tr>
-                            <tr><td>Comment allez-vous&#8239;?</td><td>Comment ça va&#8239;? / Ça va&#8239;?</td></tr>
+                            <tr><td>Bonjour, Monsieur / Madame. <button class="btn-audio" onclick="parler('Bonjour Monsieur, bonjour Madame.', this)">Écouter</button></td><td>Salut ! <button class="btn-audio" onclick="parler('Salut !', this)">Écouter</button></td></tr>
+                            <tr><td>Comment allez-vous&#8239;? <button class="btn-audio" onclick="parler('Comment allez-vous ?', this)">Écouter</button></td><td>Comment ça va&#8239;? / Ça va&#8239;? <button class="btn-audio" onclick="parler('Comment ça va ?', this)">Écouter</button></td></tr>
                             <tr><td>Au revoir.</td><td>Salut&#8239;! / Ciao&#8239;!</td></tr>
                             <tr><td>Bonne journée.</td><td>À plus&#8239;!</td></tr>
                         </tbody>
@@ -282,6 +407,7 @@
                             <tr><td>Il/Elle/On <b>s'appelle</b></td><td>Ils/Elles <b>s'appellent</b></td></tr>
                         </tbody>
                     </table>
+                    <div class="exemple">Je m'appelle Miguel. <button class="btn-audio" onclick="parler('Je m\'appelle Miguel.', this)">Écouter</button></div>
                 </div>
 
                 <h3>Les Pronoms Personnels</h3>
@@ -300,6 +426,64 @@
                         </tbody>
                     </table>
                 </div>
+
+                <h3>Les Articles : Le, La, Les / Un, Une, Des</h3>
+                <div class="encadre-grammaire">
+                    <h4>Articles définis vs indéfinis</h4>
+                    <p>Les <b>articles définis</b> (le, la, l', les) désignent une chose précise ou déjà connue. Les <b>articles indéfinis</b> (un, une, des) désignent une chose non précisée ou comptée.</p>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Définis</th><th>Indéfinis</th></tr></thead>
+                        <tbody>
+                            <tr><td><b>le</b> professeur</td><td><b>un</b> professeur</td></tr>
+                            <tr><td><b>la</b> salle</td><td><b>une</b> salle</td></tr>
+                            <tr><td><b>l'</b>étudiant (voyelle)</td><td><b>un</b> étudiant</td></tr>
+                            <tr><td><b>les</b> professeurs</td><td><b>des</b> professeurs</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem;"><b>Attention&#8239;:</b> devant une voyelle ou un <b>h</b> muet, <i>le</i> et <i>la</i> deviennent toujours <b>l'</b> (l'ami, l'heure).</p>
+                </div>
+
+                <h3>Les Verbes en -ER au présent</h3>
+                <div class="encadre-grammaire">
+                    <h4>La conjugaison régulière (1er groupe)</h4>
+                    <p>La majorité des verbes français se terminent par <b>-er</b> à l'infinitif. Ils suivent tous le même modèle de terminaisons&#8239;: <code>-e, -es, -e, -ons, -ez, -ent</code>.</p>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Parler</th><th>Habiter</th></tr></thead>
+                        <tbody>
+                            <tr><td>Je <b>parl</b>e</td><td>J'<b>habit</b>e</td></tr>
+                            <tr><td>Tu <b>parl</b>es</td><td>Tu <b>habit</b>es</td></tr>
+                            <tr><td>Il/Elle/On <b>parl</b>e</td><td>Il/Elle/On <b>habit</b>e</td></tr>
+                            <tr><td>Nous <b>parl</b>ons</td><td>Nous <b>habit</b>ons</td></tr>
+                            <tr><td>Vous <b>parl</b>ez</td><td>Vous <b>habit</b>ez</td></tr>
+                            <tr><td>Ils/Elles <b>parl</b>ent</td><td>Ils/Elles <b>habit</b>ent</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exemple">Autres verbes courants&#8239;: <b>aimer</b>, <b>étudier</b>, <b>travailler</b>, <b>écouter</b>, <b>regarder</b>, <b>chercher</b>, <b>habiter (à / en)</b>.</div>
+                </div>
+
+                <h3>Vocabulaire : Nationalités et jours de la semaine</h3>
+                <div class="encadre-grammaire">
+                    <h4>Quelques nationalités courantes</h4>
+                    <div class="grille-vocab">
+                        <div class="item-vocab"><b>mexicain(e)</b> — Mexique <button class="btn-audio" onclick="parler('mexicain, mexicaine', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>français(e)</b> — France <button class="btn-audio" onclick="parler('français, française', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>espagnol(e)</b> — Espagne <button class="btn-audio" onclick="parler('espagnol, espagnole', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>américain(e)</b> — États-Unis <button class="btn-audio" onclick="parler('américain, américaine', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>canadien(ne)</b> — Canada <button class="btn-audio" onclick="parler('canadien, canadienne', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>brésilien(ne)</b> — Brésil <button class="btn-audio" onclick="parler('brésilien, brésilienne', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>allemand(e)</b> — Allemagne <button class="btn-audio" onclick="parler('allemand, allemande', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>italien(ne)</b> — Italie <button class="btn-audio" onclick="parler('italien, italienne', this)">Écouter</button></div>
+                    </div>
+                    <h4 style="margin-top: 2rem;">Les jours de la semaine</h4>
+                    <p>lundi, mardi, mercredi, jeudi, vendredi, samedi, <b>dimanche</b>. <button class="btn-audio" onclick="parler('lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche', this)">Écouter</button> En français, la semaine commence le <b>lundi</b> et les jours ne prennent <b>pas</b> de majuscule.</p>
+                </div>
+
+                <div class="encadre-culture">
+                    <h4>Le savais-tu&#8239;?</h4>
+                    <p>En français, on ne dit jamais «&#8239;Bonjour Monsieur Tillero&#8239;» à quelqu'un qu'on connaît bien&#8239;: le prénom suffit souvent entre collègues, mais on garde le vouvoiement avec un professeur ou une personne âgée, même en l'appelant par son prénom.</p>
+                </div>
+
+                <div id="quiz-mod1"></div>
             </div>
         </div>
     </div>
@@ -324,6 +508,7 @@
                             <tr><td>Il/Elle/On <b>a</b> 32 ans.</td><td>Ils/Elles <b>ont</b> 50 ans.</td></tr>
                         </tbody>
                     </table>
+                    <div class="exemple">Quel âge as-tu&#8239;? <button class="btn-audio" onclick="parler('Quel âge as-tu ?', this)">Écouter</button></div>
                 </div>
                 
                 <div class="encadre-grammaire">
@@ -336,7 +521,7 @@
                             <tr><td>Il/Elle/On <b>est</b></td><td>Ils/Elles <b>sont</b></td></tr>
                         </tbody>
                     </table>
-                    <div class="exemple">Je suis infirmier.<br>Elle est avocate.</div>
+                    <div class="exemple">Je suis infirmier. <button class="btn-audio" onclick="parler('Je suis infirmier.', this)">Écouter</button><br>Elle est avocate. <button class="btn-audio" onclick="parler('Elle est avocate.', this)">Écouter</button></div>
                 </div>
 
                 <h3>Le Féminin des Métiers</h3>
@@ -363,7 +548,59 @@
                         <li><b>80</b> s'écrit quatre-vingts. Attention, il prend un "s" seulement s'il n'est pas suivi d'un autre nombre (quatre-vingt-deux).</li>
                         <li><b>90</b> s'écrit quatre-vingt-dix (80 + 10).</li>
                     </ul>
+                    <button class="btn-audio" onclick="parler('vingt-et-un, trente-deux, soixante-dix, quatre-vingts, quatre-vingt-dix', this)" style="margin-top: 0.5rem;">Écouter des exemples</button>
                 </div>
+
+                <h3>Le Verbe Faire</h3>
+                <div class="encadre-grammaire">
+                    <h4>Un verbe très utile (irrégulier)</h4>
+                    <p>Le verbe <b>faire</b> sert à parler des activités, du sport, de la météo et de beaucoup d'expressions figées.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td>Je <b>fais</b></td><td>Nous <b>faisons</b></td></tr>
+                            <tr><td>Tu <b>fais</b></td><td>Vous <b>faites</b></td></tr>
+                            <tr><td>Il/Elle/On <b>fait</b></td><td>Ils/Elles <b>font</b></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="exemple">Je <b>fais</b> du sport. Il <b>fait</b> beau. Vous <b>faites</b> vos devoirs.</div>
+                </div>
+
+                <h3>Dire l'heure</h3>
+                <div class="encadre-grammaire">
+                    <h4>Quelle heure est-il&#8239;?</h4>
+                    <p>On utilise toujours <b>il est</b> pour donner l'heure, suivi du nombre d'heures et de minutes.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td>8h00</td><td>Il est huit heures.</td></tr>
+                            <tr><td>8h15</td><td>Il est huit heures <b>et quart</b>.</td></tr>
+                            <tr><td>8h30</td><td>Il est huit heures <b>et demie</b>.</td></tr>
+                            <tr><td>8h45</td><td>Il est neuf heures <b>moins le quart</b>.</td></tr>
+                            <tr><td>12h00 / 00h00</td><td>Il est <b>midi</b> / Il est <b>minuit</b>.</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-audio" onclick="parler('Quelle heure est-il ? Il est huit heures et quart.', this)" style="margin-top: 0.5rem;">Écouter</button>
+                </div>
+
+                <h3>Les Nombres Ordinaux</h3>
+                <div class="encadre-grammaire">
+                    <h4>Premier, deuxième, troisième...</h4>
+                    <p>Les nombres ordinaux se forment généralement avec le nombre + <b>-ième</b> (sauf <i>premier/première</i>).</p>
+                    <div class="grille-vocab">
+                        <div class="item-vocab">1<sup>er</sup> — <b>premier</b> / 1<sup>ère</sup> — <b>première</b></div>
+                        <div class="item-vocab">2<sup>e</sup> — <b>deuxième</b></div>
+                        <div class="item-vocab">3<sup>e</sup> — <b>troisième</b></div>
+                        <div class="item-vocab">4<sup>e</sup> — <b>quatrième</b></div>
+                        <div class="item-vocab">5<sup>e</sup> — <b>cinquième</b></div>
+                        <div class="item-vocab">9<sup>e</sup> — <b>neuvième</b> (attention&#8239;: f → v)</div>
+                    </div>
+                </div>
+
+                <div class="encadre-culture">
+                    <h4>Astuce de prononciation</h4>
+                    <p>À l'oral, on utilise souvent l'heure « courante » (8h du matin, 3h de l'après-midi) plutôt que le système de 24 heures, réservé aux horaires officiels (transports, administration).</p>
+                </div>
+
+                <div id="quiz-mod2"></div>
             </div>
         </div>
     </div>
@@ -419,6 +656,61 @@
                         <b>Il/Elle est + Profession (sans article)&#8239;:</b> Elle est journaliste. Il est professeur.
                     </div>
                 </div>
+
+                <h3>Les Adjectifs Possessifs</h3>
+                <div class="encadre-grammaire">
+                    <h4>Mon, ma, mes... : exprimer la possession</h4>
+                    <p>L'adjectif possessif s'accorde avec le nom qui suit, <b>pas</b> avec la personne qui possède.</p>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Masculin sing.</th><th>Féminin sing.</th><th>Pluriel</th></tr></thead>
+                        <tbody>
+                            <tr><td><b>mon</b> père</td><td><b>ma</b> mère</td><td><b>mes</b> parents</td></tr>
+                            <tr><td><b>ton</b> frère</td><td><b>ta</b> sœur</td><td><b>tes</b> frères</td></tr>
+                            <tr><td><b>son</b> mari</td><td><b>sa</b> femme</td><td><b>ses</b> enfants</td></tr>
+                            <tr><td><b>notre</b> famille</td><td><b>notre</b> famille</td><td><b>nos</b> familles</td></tr>
+                            <tr><td><b>votre</b> cousin</td><td><b>votre</b> cousine</td><td><b>vos</b> cousins</td></tr>
+                            <tr><td><b>leur</b> fils</td><td><b>leur</b> fille</td><td><b>leurs</b> enfants</td></tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem;"><b>Attention&#8239;:</b> devant un nom féminin qui commence par une voyelle, on utilise <b>mon/ton/son</b> (et non ma/ta/sa)&#8239;: <b>mon</b> amie (et non « ma amie »).</p>
+                </div>
+
+                <h3>Vocabulaire : La Famille</h3>
+                <div class="encadre-grammaire">
+                    <h4>Les membres de la famille</h4>
+                    <div class="grille-vocab">
+                        <div class="item-vocab"><b>le père</b> / la mère <button class="btn-audio" onclick="parler('le père, la mère', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le frère</b> / la sœur <button class="btn-audio" onclick="parler('le frère, la sœur', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le fils</b> / la fille <button class="btn-audio" onclick="parler('le fils, la fille', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le mari</b> / la femme <button class="btn-audio" onclick="parler('le mari, la femme', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le grand-père</b> / la grand-mère <button class="btn-audio" onclick="parler('le grand-père, la grand-mère', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>l'oncle</b> / la tante <button class="btn-audio" onclick="parler('l\'oncle, la tante', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le cousin</b> / la cousine <button class="btn-audio" onclick="parler('le cousin, la cousine', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le neveu</b> / la nièce <button class="btn-audio" onclick="parler('le neveu, la nièce', this)">Écouter</button></div>
+                    </div>
+                </div>
+
+                <h3>Décrire le caractère</h3>
+                <div class="encadre-grammaire">
+                    <h4>Adjectifs de personnalité et leur accord</h4>
+                    <table class="tableau-temps">
+                        <thead><tr><th>Masculin</th><th>Féminin</th></tr></thead>
+                        <tbody>
+                            <tr><td>sympathique</td><td>sympathique <i>(invariable)</i></td></tr>
+                            <tr><td>gentil</td><td>gentil<b>le</b></td></tr>
+                            <tr><td>sérieux</td><td>séri<b>euse</b></td></tr>
+                            <tr><td>travailleur</td><td>travaill<b>euse</b></td></tr>
+                            <tr><td>timide</td><td>timide <i>(invariable)</i></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="encadre-culture">
+                    <h4>Le savais-tu&#8239;?</h4>
+                    <p>En France, on dit souvent <b>« beau-père »</b> et <b>« belle-mère »</b> aussi bien pour le parent du conjoint que pour le nouveau conjoint d'un parent&#8239;: le contexte précise le sens&#8239;!</p>
+                </div>
+
+                <div id="quiz-mod3"></div>
             </div>
         </div>
     </div>
@@ -477,17 +769,465 @@
                         Pour avoir une maison feng shui, <b>vous devez suivre</b> quelques règles.
                     </div>
                 </div>
+
+                <h3>Le Verbe Aller et les Lieux</h3>
+                <div class="encadre-grammaire">
+                    <h4>Aller + article contracté</h4>
+                    <p>Le verbe <b>aller</b> est irrégulier. Avec un lieu, la préposition <b>à</b> se contracte souvent avec l'article défini.</p>
+                    <table class="tableau-temps">
+                        <tbody>
+                            <tr><td>Je <b>vais</b></td><td>Nous <b>allons</b></td></tr>
+                            <tr><td>Tu <b>vas</b></td><td>Vous <b>allez</b></td></tr>
+                            <tr><td>Il/Elle/On <b>va</b></td><td>Ils/Elles <b>vont</b></td></tr>
+                        </tbody>
+                    </table>
+                    <table class="tableau-temps" style="margin-top: 1rem;">
+                        <thead><tr><th>Article + lieu</th><th>Contraction</th></tr></thead>
+                        <tbody>
+                            <tr><td>à + le salon</td><td>Je vais <b>au</b> salon.</td></tr>
+                            <tr><td>à + la cuisine</td><td>Je vais <b>à la</b> cuisine.</td></tr>
+                            <tr><td>à + l'école</td><td>Je vais <b>à l'</b>école.</td></tr>
+                            <tr><td>à + les toilettes</td><td>Je vais <b>aux</b> toilettes.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Vocabulaire : Les meubles et les pièces</h3>
+                <div class="encadre-grammaire">
+                    <h4>Enrichir la description du logement</h4>
+                    <div class="grille-vocab">
+                        <div class="item-vocab"><b>le salon</b> — la salle à manger <button class="btn-audio" onclick="parler('le salon, la salle à manger', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>la chambre</b> — la cuisine <button class="btn-audio" onclick="parler('la chambre, la cuisine', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>la salle de bains</b> — les toilettes <button class="btn-audio" onclick="parler('la salle de bains, les toilettes', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le lit</b> — l'armoire <button class="btn-audio" onclick="parler('le lit, l\'armoire', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>le canapé</b> — le fauteuil <button class="btn-audio" onclick="parler('le canapé, le fauteuil', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>la table</b> — la chaise <button class="btn-audio" onclick="parler('la table, la chaise', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>l'étagère</b> — le tapis <button class="btn-audio" onclick="parler('l\'étagère, le tapis', this)">Écouter</button></div>
+                        <div class="item-vocab"><b>la fenêtre</b> — la porte <button class="btn-audio" onclick="parler('la fenêtre, la porte', this)">Écouter</button></div>
+                    </div>
+                </div>
+
+                <h3>La Place de l'Adjectif</h3>
+                <div class="encadre-grammaire">
+                    <h4>Avant ou après le nom&#8239;?</h4>
+                    <p>La plupart des adjectifs se placent <b>après</b> le nom (couleur, nationalité, forme). Un petit groupe d'adjectifs courts et fréquents se placent <b>avant</b> le nom.</p>
+                    <div class="exemple">
+                        <b>Après le nom&#8239;:</b> un canapé <i>bleu</i>, une table <i>ronde</i>, un appartement <i>moderne</i>.<br>
+                        <b>Avant le nom&#8239;:</b> un <i>grand</i> salon, une <i>petite</i> chambre, un <i>joli</i> jardin, une <i>bonne</i> idée.
+                    </div>
+                </div>
+
+                <div class="encadre-culture">
+                    <h4>Le savais-tu&#8239;?</h4>
+                    <p>Dans les petits appartements français (studios), il n'est pas rare que la « chambre » et le « salon » soient <b>la même pièce</b> — on parle alors d'un <b>studio</b> ou d'un <b>T1</b> (T pour « type »).</p>
+                </div>
+
+                <div id="quiz-mod4"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- ================= VOCABULAIRE & JEUX ================= -->
+    <div id="vue-jeux" class="vue">
+        <header style="background: linear-gradient(135deg, var(--sauge) 0%, #3D5A47 100%);">
+            <button class="btn-retour" onclick="naviguer('vue-hub')">Menu Principal</button>
+            <div class="titre-professeur" style="color: #DDEAE0;">Révision Active</div>
+            <h1>Vocabulaire & Jeux</h1>
+            <p>Choisissez un module pour réviser son vocabulaire en fiches mémo, puis testez votre mémoire dans le jeu ci-dessous.</p>
+        </header>
+        <div class="conteneur">
+
+            <div class="bloc-jeu">
+                <h3>Fiches Mémo</h3>
+                <p class="sous-titre">Cliquez sur la carte pour voir la traduction. Utilisez le bouton pour écouter la prononciation.</p>
+                <div class="selecteur-deck" id="selecteur-deck-flash"></div>
+                <div class="zone-flashcard">
+                    <div class="flashcard" id="carte-flash" onclick="retournerFlashcard()">
+                        <div class="flashcard-face">
+                            <div class="flashcard-avant">
+                                <div class="flashcard-mot" id="flash-mot-fr">...</div>
+                                <div class="flashcard-sous">Français</div>
+                            </div>
+                            <div class="flashcard-arriere">
+                                <div class="flashcard-mot" id="flash-mot-es">...</div>
+                                <div class="flashcard-sous">Español</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-nav">
+                        <button onclick="flashcardPrecedente()" title="Précédente">←</button>
+                        <button onclick="flashcardAudio()" title="Écouter" style="font-size:0.8rem; font-weight:700;">Lire</button>
+                        <div class="flashcard-compteur" id="flash-compteur">1 / 8</div>
+                        <button onclick="flashcardSuivante()" title="Suivante">→</button>
+                    </div>
+                    <p class="flashcard-astuce">Cliquez sur la carte pour la retourner</p>
+                </div>
+            </div>
+
+            <div class="bloc-jeu">
+                <h3>Jeu de Mémoire</h3>
+                <p class="sous-titre">Retrouvez les paires français - español. Le même module que les fiches mémo est utilisé.</p>
+                <div class="stats-jeu">
+                    <div>Coups&#8239;: <span id="memoire-coups">0</span></div>
+                    <div>Paires trouvées&#8239;: <span id="memoire-trouvees">0</span> / <span id="memoire-total">8</span></div>
+                </div>
+                <div class="grille-memoire" id="grille-memoire"></div>
+                <div style="text-align:center; margin-top: 2rem;">
+                    <button class="btn-recommencer" onclick="demarrerMemoire()">Nouvelle partie</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <!-- ================= SCRIPTS ================= -->
     <script>
-        function naviguer(id) {
-            window.scrollTo(0, 0); 
-            document.querySelectorAll('.vue').forEach(el => el.classList.remove('active')); 
-            setTimeout(() => document.getElementById(id).classList.add('active'), 50); 
+    const VOCAB = {
+        mod1: [
+            { fr: "Bonjour", es: "Buenos días / Hola (formal)" },
+            { fr: "Salut", es: "Hola (informal)" },
+            { fr: "Merci", es: "Gracias" },
+            { fr: "S'il vous plaît", es: "Por favor (formal)" },
+            { fr: "Au revoir", es: "Adiós" },
+            { fr: "Je m'appelle...", es: "Me llamo..." },
+            { fr: "Comment allez-vous ?", es: "¿Cómo está usted?" },
+            { fr: "Enchanté(e)", es: "Encantado/a" }
+        ],
+        mod2: [
+            { fr: "Quel âge as-tu ?", es: "¿Cuántos años tienes?" },
+            { fr: "Quelle heure est-il ?", es: "¿Qué hora es?" },
+            { fr: "un médecin", es: "un médico" },
+            { fr: "une avocate", es: "una abogada" },
+            { fr: "vingt-et-un", es: "veintiuno" },
+            { fr: "soixante-dix", es: "setenta" },
+            { fr: "premier / première", es: "primero / primera" },
+            { fr: "faire du sport", es: "hacer deporte" }
+        ],
+        mod3: [
+            { fr: "le mari / la femme", es: "el esposo / la esposa" },
+            { fr: "le frère / la sœur", es: "el hermano / la hermana" },
+            { fr: "les grands-parents", es: "los abuelos" },
+            { fr: "célibataire", es: "soltero/a" },
+            { fr: "marié(e)", es: "casado/a" },
+            { fr: "sympathique", es: "simpático/a" },
+            { fr: "gentil(le)", es: "amable" },
+            { fr: "C'est mon cousin", es: "Es mi primo" }
+        ],
+        mod4: [
+            { fr: "le salon", es: "la sala" },
+            { fr: "la chambre", es: "la habitación" },
+            { fr: "la cuisine", es: "la cocina" },
+            { fr: "la salle de bains", es: "el baño" },
+            { fr: "à côté de", es: "al lado de" },
+            { fr: "il y a", es: "hay" },
+            { fr: "le canapé", es: "el sofá" },
+            { fr: "il faut", es: "hay que / es necesario" }
+        ]
+    };
+    const NOMS_MODULES = { mod1: "Module 1", mod2: "Module 2", mod3: "Module 3", mod4: "Module 4" };
+
+    const QUIZ = {
+        mod1: [
+            { q: "Comment dit-on « Hola » de manière informelle ?", options: ["Bonjour", "Salut", "Au revoir", "Comment allez-vous ?"], correct: 1, expl: "« Salut » s'utilise entre amis, en famille ou avec des personnes que l'on tutoie." },
+            { q: "Complétez : « Nous ___ Sophie et Marc. » (s'appeler)", options: ["nous appelons", "vous appelez", "s'appelle", "m'appelle"], correct: 0, expl: "Avec « nous », le verbe pronominal « s'appeler » donne « nous nous appelons »." },
+            { q: "Quel est le pronom tonique pour insister sur « nous » ?", options: ["Moi", "Nous", "Vous", "Eux"], correct: 1, expl: "Le pronom tonique de « nous » reste « nous » : « Nous, nous sommes étudiants. »" },
+            { q: "« C'est ___ professeur patient. » (article indéfini masculin)", options: ["le", "un", "la", "une"], correct: 1, expl: "Devant un nom masculin non précisé, on utilise l'article indéfini « un »." },
+            { q: "Quelle est la forme correcte du verbe « habiter » pour « vous » ?", options: ["habites", "habitez", "habitons", "habite"], correct: 1, expl: "Les verbes en -er prennent « -ez » à la 2e personne du pluriel : vous habitez." }
+        ],
+        mod2: [
+            { q: "Quel verbe utilise-t-on pour dire son âge ?", options: ["être", "avoir", "faire", "aller"], correct: 1, expl: "En français, l'âge s'exprime toujours avec le verbe « avoir » : j'ai 20 ans." },
+            { q: "« Elle ___ architecte. » (être)", options: ["es", "est", "suis", "sont"], correct: 1, expl: "À la 3e personne du singulier, le verbe être donne « est »." },
+            { q: "Comment écrit-on 91 en lettres ?", options: ["quatre-vingt-onze", "quatre-vingt-dix-un", "neuf-vingt-un", "quatre-vingts-onze"], correct: 0, expl: "91 = 80 + 11, donc « quatre-vingt-onze » (sans « s » car suivi d'un autre nombre)." },
+            { q: "Il est 14h30. Comment dit-on l'heure à l'oral courant ?", options: ["Il est deux heures et quart", "Il est deux heures et demie", "Il est trois heures moins le quart", "Il est quatre heures et demie"], correct: 1, expl: "14h30 = 2h30 de l'après-midi = « il est deux heures et demie »." },
+            { q: "Quel est le féminin de « vendeur » ?", options: ["vendeuse", "vendeure", "vendrice", "vendeuxe"], correct: 0, expl: "Les métiers en « -eur » forment leur féminin en « -euse » : vendeur ➔ vendeuse." }
+        ],
+        mod3: [
+            { q: "« ___ Camille, elle est ingénieure. » (identifier quelqu'un)", options: ["Elle est", "C'est", "Il est", "Ce sont"], correct: 1, expl: "Pour identifier une personne par son nom propre, on utilise « C'est »." },
+            { q: "Complétez : « Voici ___ sœur. » (mon/ma)", options: ["mon", "ma", "mes", "son"], correct: 1, expl: "« sœur » est féminin singulier, donc « ma sœur »." },
+            { q: "Quel est le féminin de « sérieux » ?", options: ["sérieuse", "sérieuxe", "seriose", "sérieux"], correct: 0, expl: "Les adjectifs en « -eux » forment leur féminin en « -euse » : sérieux ➔ sérieuse." },
+            { q: "« Il est ___. » (nationalité italienne, masculin)", options: ["italien", "italienne", "italie", "italiens"], correct: 0, expl: "Au masculin singulier, on dit « italien » (sans le « ne » du féminin)." },
+            { q: "Comment dit-on « mis abuelos » en français ?", options: ["mes grands-parents", "ma grand-mère", "mon grand-père", "leurs grands-parents"], correct: 0, expl: "« Mes » (pluriel) + « grands-parents » = « mes grands-parents »." }
+        ],
+        mod4: [
+            { q: "« Il n'y a pas ___ balcon. » (forme négative)", options: ["de", "un", "du", "des"], correct: 0, expl: "À la forme négative, les articles indéfinis se transforment toujours en « de »." },
+            { q: "« Je vais ___ marché. » (à + le)", options: ["au", "à la", "à l'", "aux"], correct: 0, expl: "à + le = au (contraction obligatoire) : je vais au marché." },
+            { q: "Le fauteuil est juste devant la télévision. Quelle préposition utiliser ?", options: ["en face de", "à côté de", "sous", "entre"], correct: 0, expl: "« En face de » indique une position opposée, directement devant." },
+            { q: "Quel adjectif se place normalement AVANT le nom ?", options: ["grand", "bleu", "moderne", "français"], correct: 0, expl: "« Grand » fait partie du petit groupe d'adjectifs courts et fréquents placés avant le nom." },
+            { q: "« Il ___ ranger la chambre. » (obligation impersonnelle)", options: ["faut", "fait", "faits", "fallait"], correct: 0, expl: "« Il faut + infinitif » exprime une obligation impersonnelle au présent." }
+        ]
+    };
+
+    function naviguer(id) {
+        window.scrollTo(0, 0);
+        document.querySelectorAll('.vue').forEach(el => el.classList.remove('active'));
+        setTimeout(() => document.getElementById(id).classList.add('active'), 50);
+        if (id === 'vue-hub') majAffichageProgression();
+        if (id === 'vue-jeux') { initFlashcards(); demarrerMemoire(); }
+    }
+
+    function basculerTheme() {
+        const html = document.documentElement;
+        const actuel = html.getAttribute('data-theme');
+        const nouveau = actuel === 'sombre' ? 'clair' : 'sombre';
+        html.setAttribute('data-theme', nouveau);
+        localStorage.setItem('espaceA1Theme', nouveau);
+        document.getElementById('btn-theme').textContent = nouveau === 'sombre' ? 'Jour' : 'Nuit';
+    }
+    (function initTheme() {
+        const sauvegarde = localStorage.getItem('espaceA1Theme');
+        if (sauvegarde === 'sombre') {
+            document.documentElement.setAttribute('data-theme', 'sombre');
+            document.getElementById('btn-theme').textContent = 'Jour';
         }
+    })();
+
+    function parler(texte, btn) {
+        if (!('speechSynthesis' in window)) { alert("La synthèse vocale n'est pas disponible sur ce navigateur."); return; }
+        window.speechSynthesis.cancel();
+        const utt = new SpeechSynthesisUtterance(texte);
+        utt.lang = 'fr-FR';
+        utt.rate = 0.9;
+        if (btn) {
+            btn.classList.add('parle');
+            utt.onend = () => btn.classList.remove('parle');
+        }
+        window.speechSynthesis.speak(utt);
+    }
+
+    function chargerProgres() {
+        try { return JSON.parse(localStorage.getItem('espaceA1Progres')) || {}; }
+        catch (e) { return {}; }
+    }
+    function enregistrerScore(mod, score, total) {
+        const p = chargerProgres();
+        const meilleur = p[mod] && p[mod].score >= score ? p[mod].score : score;
+        p[mod] = { score: meilleur, total: total };
+        localStorage.setItem('espaceA1Progres', JSON.stringify(p));
+        majAffichageProgression();
+    }
+    function majAffichageProgression() {
+        const p = chargerProgres();
+        const modules = ['mod1', 'mod2', 'mod3', 'mod4'];
+        let sommePct = 0;
+        modules.forEach(m => {
+            const info = p[m];
+            const pct = info ? Math.round((info.score / info.total) * 100) : 0;
+            sommePct += pct;
+            const mini = document.getElementById('mini-' + m);
+            const badge = document.getElementById('badge-' + m);
+            if (mini) mini.style.width = pct + '%';
+            if (badge) badge.style.display = pct === 100 ? 'inline-block' : 'none';
+        });
+        const globalPct = Math.round(sommePct / modules.length);
+        const barreGlobale = document.getElementById('barre-progres-globale');
+        const pctGlobal = document.getElementById('pct-progres-globale');
+        if (barreGlobale) barreGlobale.style.width = globalPct + '%';
+        if (pctGlobal) pctGlobal.textContent = globalPct + '%';
+    }
+
+    function lancerConfettis() {
+        const couleurs = ['#2B5C8F', '#557A64', '#D4AF37', '#B5484D'];
+        const conteneur = document.createElement('div');
+        conteneur.className = 'confetti-conteneur';
+        document.body.appendChild(conteneur);
+        for (let i = 0; i < 60; i++) {
+            const p = document.createElement('div');
+            p.className = 'confetti-piece';
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.background = couleurs[Math.floor(Math.random() * couleurs.length)];
+            p.style.animationDelay = (Math.random() * 0.6) + 's';
+            p.style.animationDuration = (2 + Math.random() * 1.2) + 's';
+            conteneur.appendChild(p);
+        }
+        setTimeout(() => conteneur.remove(), 3600);
+    }
+
+    const etatsQuiz = {};
+
+    function construireQuiz(mod) {
+        const conteneur = document.getElementById('quiz-' + mod);
+        if (!conteneur || conteneur.dataset.construit) return;
+        conteneur.dataset.construit = "1";
+        const questions = QUIZ[mod];
+        etatsQuiz[mod] = { repondues: 0, correctes: 0 };
+
+        let html = '<div class="bloc-exercice"><h4>Exercice de validation</h4><p class="quiz-intro">Répondez aux 5 questions pour valider ce module. Vous pouvez recommencer autant de fois que vous le souhaitez.</p><div id="quiz-questions-' + mod + '">';
+        questions.forEach((qz, i) => {
+            html += '<div class="quiz-question"><div class="quiz-enonce">' + (i + 1) + '. ' + qz.q + '</div><div class="quiz-options">';
+            qz.options.forEach((opt, j) => {
+                html += '<button class="quiz-option" onclick="repondreQuiz(\'' + mod + '\', ' + i + ', ' + j + ', this)">' + opt + '</button>';
+            });
+            html += '</div><div class="quiz-explication" id="expl-' + mod + '-' + i + '">' + qz.expl + '</div></div>';
+        });
+        html += '</div><div class="quiz-resultat" id="resultat-' + mod + '"><div class="score" id="score-' + mod + '"></div><div class="message" id="message-' + mod + '"></div><button class="btn-recommencer" onclick="recommencerQuiz(\'' + mod + '\')">Recommencer le quiz</button></div></div>';
+        conteneur.innerHTML = html;
+    }
+
+    function repondreQuiz(mod, qIndex, optIndex, btn) {
+        const groupe = btn.parentElement.querySelectorAll('.quiz-option');
+        if (groupe[0].disabled) return;
+        const bonneReponse = QUIZ[mod][qIndex].correct;
+        groupe.forEach((b, j) => {
+            b.disabled = true;
+            if (j === bonneReponse) b.classList.add('correcte');
+            else if (j === optIndex) b.classList.add('incorrecte');
+        });
+        document.getElementById('expl-' + mod + '-' + qIndex).classList.add('visible');
+
+        etatsQuiz[mod].repondues++;
+        if (optIndex === bonneReponse) etatsQuiz[mod].correctes++;
+
+        if (etatsQuiz[mod].repondues === QUIZ[mod].length) {
+            const score = etatsQuiz[mod].correctes;
+            const total = QUIZ[mod].length;
+            const resultat = document.getElementById('resultat-' + mod);
+            document.getElementById('score-' + mod).textContent = score + ' / ' + total;
+            let message = '';
+            if (score === total) message = "Parfait ! Ce module est acquis.";
+            else if (score >= total - 1) message = "Très bien ! Encore un petit effort pour le sans-faute.";
+            else message = "Bon début — révisez les points manqués et réessayez.";
+            document.getElementById('message-' + mod).textContent = message;
+            resultat.classList.add('visible');
+            enregistrerScore(mod, score, total);
+            if (score === total) lancerConfettis();
+        }
+    }
+
+    function recommencerQuiz(mod) {
+        const conteneur = document.getElementById('quiz-' + mod);
+        conteneur.dataset.construit = "";
+        conteneur.innerHTML = '';
+        construireQuiz(mod);
+        window.scrollTo({ top: conteneur.offsetTop - 100, behavior: 'smooth' });
+    }
+
+    let deckActuel = 'mod1';
+    let indexFlash = 0;
+
+    function initFlashcards() {
+        const selecteur = document.getElementById('selecteur-deck-flash');
+        if (selecteur.dataset.construit) { afficherFlashcard(); return; }
+        selecteur.dataset.construit = "1";
+        let html = '';
+        Object.keys(VOCAB).forEach(m => {
+            html += '<button class="btn-deck' + (m === deckActuel ? ' actif' : '') + '" id="deck-btn-' + m + '" onclick="choisirDeck(\'' + m + '\')">' + NOMS_MODULES[m] + '</button>';
+        });
+        selecteur.innerHTML = html;
+        afficherFlashcard();
+    }
+
+    function choisirDeck(mod) {
+        deckActuel = mod;
+        indexFlash = 0;
+        document.querySelectorAll('.btn-deck').forEach(b => b.classList.remove('actif'));
+        document.getElementById('deck-btn-' + mod).classList.add('actif');
+        document.getElementById('carte-flash').classList.remove('retournee');
+        afficherFlashcard();
+    }
+
+    function afficherFlashcard() {
+        const carte = VOCAB[deckActuel][indexFlash];
+        document.getElementById('flash-mot-fr').textContent = carte.fr;
+        document.getElementById('flash-mot-es').textContent = carte.es;
+        document.getElementById('flash-compteur').textContent = (indexFlash + 1) + ' / ' + VOCAB[deckActuel].length;
+    }
+
+    function retournerFlashcard() {
+        document.getElementById('carte-flash').classList.toggle('retournee');
+    }
+
+    function flashcardSuivante() {
+        indexFlash = (indexFlash + 1) % VOCAB[deckActuel].length;
+        document.getElementById('carte-flash').classList.remove('retournee');
+        afficherFlashcard();
+    }
+
+    function flashcardPrecedente() {
+        indexFlash = (indexFlash - 1 + VOCAB[deckActuel].length) % VOCAB[deckActuel].length;
+        document.getElementById('carte-flash').classList.remove('retournee');
+        afficherFlashcard();
+    }
+
+    function flashcardAudio() {
+        parler(VOCAB[deckActuel][indexFlash].fr, null);
+    }
+
+    let etatMemoire = { premiereCarte: null, coups: 0, trouvees: 0, verrouille: false };
+
+    function melanger(tableau) {
+        const t = [...tableau];
+        for (let i = t.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [t[i], t[j]] = [t[j], t[i]];
+        }
+        return t;
+    }
+
+    function demarrerMemoire() {
+        const vocab = VOCAB[deckActuel];
+        let cartes = [];
+        vocab.forEach((item, i) => {
+            cartes.push({ texte: item.fr, paire: i, type: 'fr' });
+            cartes.push({ texte: item.es, paire: i, type: 'es' });
+        });
+        cartes = melanger(cartes);
+
+        etatMemoire = { premiereCarte: null, coups: 0, trouvees: 0, verrouille: false };
+        document.getElementById('memoire-coups').textContent = '0';
+        document.getElementById('memoire-trouvees').textContent = '0';
+        document.getElementById('memoire-total').textContent = vocab.length;
+
+        const grille = document.getElementById('grille-memoire');
+        grille.innerHTML = '';
+        cartes.forEach((c, i) => {
+            const div = document.createElement('div');
+            div.className = 'carte-memoire';
+            div.dataset.paire = c.paire;
+            div.dataset.index = i;
+            div.onclick = () => retournerCarteMemoire(div, c);
+            div.innerHTML = '<div class="carte-memoire-face"><div class="carte-memoire-avant" style="font-family:var(--font-titre); font-size:1.8rem; font-style:italic;">FR</div><div class="carte-memoire-arriere">' + c.texte + '</div></div>';
+            grille.appendChild(div);
+        });
+    }
+
+    function retournerCarteMemoire(div, carte) {
+        if (etatMemoire.verrouille || div.classList.contains('retournee') || div.classList.contains('trouvee')) return;
+        div.classList.add('retournee');
+
+        if (!etatMemoire.premiereCarte) {
+            etatMemoire.premiereCarte = { div, carte };
+            return;
+        }
+
+        etatMemoire.coups++;
+        document.getElementById('memoire-coups').textContent = etatMemoire.coups;
+        etatMemoire.verrouille = true;
+
+        const premiere = etatMemoire.premiereCarte;
+        if (premiere.carte.paire === carte.paire && premiere.carte.type !== carte.type) {
+            premiere.div.classList.add('trouvee');
+            div.classList.add('trouvee');
+            etatMemoire.trouvees++;
+            document.getElementById('memoire-trouvees').textContent = etatMemoire.trouvees;
+            etatMemoire.premiereCarte = null;
+            etatMemoire.verrouille = false;
+            if (etatMemoire.trouvees === VOCAB[deckActuel].length) {
+                setTimeout(lancerConfettis, 300);
+            }
+        } else {
+            setTimeout(() => {
+                premiere.div.classList.remove('retournee');
+                div.classList.remove('retournee');
+                etatMemoire.premiereCarte = null;
+                etatMemoire.verrouille = false;
+            }, 900);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        majAffichageProgression();
+        ['mod1', 'mod2', 'mod3', 'mod4'].forEach(construireQuiz);
+    });
     </script>
 </body>
 </html>
